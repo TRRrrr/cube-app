@@ -1,4 +1,4 @@
-function MainCtrl($scope, config) {
+module.controller('MainCtrl', ['$scope', 'config', function ($scope, config) {
   $scope.companyName = config.companyName;
   $scope.menus = config.menus;
   $scope.pages = {};
@@ -20,6 +20,4 @@ function MainCtrl($scope, config) {
     $scope.activePageId = $scope.menus[activeIndex].title;
   };
 
-}
-
-MainCtrl.$inject = ['$scope', 'config'];
+}]);
