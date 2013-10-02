@@ -1,9 +1,9 @@
-angular.module('perfetch', []).
+angular.module('perfetch', ['perfetch.directive']).
   value('config', {     // global state
     companyName: 'Perfetch',
     menus: [
       {
-        title: 'App',
+        title: 'Home',
         url: 'app.html',
         active: true
       }, {
@@ -12,5 +12,5 @@ angular.module('perfetch', []).
         active: false
       }
     ],
-    homePage: 'App'
+    homePage: 'Home'
   });

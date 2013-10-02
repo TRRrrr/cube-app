@@ -7,7 +7,7 @@ function MainCtrl($scope, config) {
     $scope.pages[menu.title] = menu.url;
   });
 
-  $scope.activePageId = 'App';
+  $scope.activePageId = config.homePage;
 
 
   $scope.onChangeMenu = function (activeIndex) {

@@ -1,4 +1,4 @@
-angular.module('perfetch').
+angular.module('perfetch.directive', []).
   directive('dview', function () {
     return {
       restrict: 'EACM',
