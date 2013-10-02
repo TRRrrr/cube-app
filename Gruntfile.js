@@ -25,9 +25,16 @@ module.exports = function (grunt) {
           keepalive: true
         }
       }
+    },
+    watch: {
+      src: {
+        files: ['src/js/**/*.js'],
+        tasks: ['concat']
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 };
