@@ -1,3 +1,5 @@
-<div ng-controller="StatsCtrl">
-  <p>this is stats page hello {{ a }}</p>
+<div ng-controller="StatsCtrl" style="padding-top: 20px;">
+  <button type="button" class="btn btn-default" ng-click="changeType('line')">Line Chart</button>
+  <button type="button" class="btn btn-default" ng-click="changeType('bar')">Bar Chart</button>
+  <ui-chart chart-data="chartData" chart-options="chartOptions"></ui-chart>
 </div>
