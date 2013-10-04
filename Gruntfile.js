@@ -1,9 +1,10 @@
 module.exports = function (grunt) {
   grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
     concat: {
       directive: {
         src: ['src/js/directive_header.js', 'src/js/directive/*.js', 'src/js/directive_footer.js'],
-        dest: 'src/dist/js/directive.js'
+        dest: 'src/dist/js/<%= pkg.name %>-directive.js'
       },
       app: {
         src: [
@@ -14,7 +15,7 @@ module.exports = function (grunt) {
           'src/js/stats.js',
           'src/js/app_footer.js',
         ],
-        dest: 'src/dist/js/app.js'
+        dest: 'src/dist/js/<%= pkg.name %>.js'
       }
     },
     connect: {

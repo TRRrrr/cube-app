@@ -2,14 +2,14 @@ module.value('config', {     // global state
   companyName: 'Perfetch',
   menus: [
     {
+      id: 'home',
       title: 'Home',
-      url: 'app.html',
-      active: true
+      url: 'app.html'
     }, {
+      id: 'stats',
       title: 'Stats',
-      url: 'stats.html',
-      active: false
+      url: 'stats.html'
     }
   ],
-  homePage: 'Home'
+  homePage: 'home'
 });

@@ -1,23 +1,15 @@
 module.controller('MainCtrl', ['$scope', 'config', function ($scope, config) {
   $scope.companyName = config.companyName;
   $scope.menus = config.menus;
-  $scope.pages = {};
 
+  $scope.pages = {};
   $.each($scope.menus, function (index, menu) {
-    $scope.pages[menu.title] = menu.url;
+    $scope.pages[menu.id] = menu.url;
   });
 
-  $scope.activePageId = config.homePage;
-
-
-  $scope.onChangeMenu = function (activeIndex) {
-    $.each($scope.menus, function (index, menu) {
-      menu.active = (index === activeIndex);
-    });
+  $scope.onChangeMenu = function (id) {
+    $scope.activePageId = id;
   };
 
-  $scope.onChangePage = function (activeIndex) {
-    $scope.activePageId = $scope.menus[activeIndex].title;
-  };
 
 }]);

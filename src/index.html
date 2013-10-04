@@ -15,31 +15,12 @@
     <!-- code -->
     <link href="css/style.css" rel="stylesheet" />
 
-    <script src="dist/js/directive.js"></script>
-    <script src="dist/js/app.js"></script>
+    <script src="dist/js/perfetch-directive.js"></script>
+    <script src="dist/js/perfetch.js"></script>
   </head>
 
   <body ng-controller="MainCtrl">
-    <!-- nav bar -->
-    <header class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a href="#" class="navbar-brand" ng-bind="companyName"></a>
-        </div>
-        <nav class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li ng-repeat="menu in menus" ng-class="{ active: menu.active }">
-              <a href="#" ng-click="onChangeMenu($index); onChangePage($index)">{{ menu.title }}</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </header> <!-- end nav bar -->
+    <menu brand="companyName" menus="menus" on-change="onChangeMenu"></menu>
 
     <div class="container">
       <dview pages="pages" active="activePageId"></dview>
