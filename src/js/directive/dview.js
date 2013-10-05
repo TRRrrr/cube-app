@@ -22,8 +22,6 @@ module.directive('dview', function () {
         if (scope.pages && scope.pages[id]) {
           scope.loadedPages[id] = scope.pages[id];
         }
-
-
       });
     }
   };

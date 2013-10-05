@@ -1,2 +1,2 @@
 (function () {
-  var module = angular.module('perfetch', ['perfetch.directive']);
+  var module = angular.module('perfetch', ['perfetch.directive', 'ngAnimate']);

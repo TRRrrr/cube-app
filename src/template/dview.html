@@ -1,3 +1,5 @@
-<div ng-repeat="(id, url) in loadedPages" ng-show="id == active">
-  <div ng-include="url"></div>
+<div ng-repeat="(id, url) in loadedPages">
+  <div ng-show="id == active" class="dview-animate">
+    <div ng-include="url"></div>
+  </div>
 </div>

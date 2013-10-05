@@ -38,3 +38,20 @@ body {
 .popover.perfetch-bottom .arrow:after {
     border-bottom-width: 50px;
 }
+
+
+/* dview animation */
+.dview-animate.ng-hide-remove {
+    -webkit-transition: 0.5s linear all; /* Chrome */
+    transition: 0.5s linear all;
+    opacity: 0;
+}
+
+.dview-animate.ng-hide-remove.ng-hide-remove-active {
+    opacity: 1;
+}
+
+.dview-animate.ng-hide {
+    display:block!important;
+    opacity: 0;
+}
