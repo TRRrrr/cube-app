@@ -25,6 +25,12 @@ module.directive('menu', function () {
         scope.onChange(scope.activeMenuId);
       };
 
+      scope.onClickBrand = function () {
+        if (scope.menus.length) {
+          scope.onChangeMenu(0);
+        }
+      };
+
       scope.$watch('active', function (value) {
         if (value != null) {
           scope.onChangeMenu(value);
