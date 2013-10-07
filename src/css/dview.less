@@ -1,0 +1,20 @@
+/* dview animation */
+@transition-time: 0.5s;
+
+.dview-animate.ng-hide-remove {
+    -webkit-transition: @transition-time linear all;
+    -moz-transition: @transition-time linear all;
+    -ms-transition: @transition-time linear all;
+    -o-transition: @transition-time linear all;
+    transition: @transition-time linear all;
+    opacity: 0;
+}
+
+.dview-animate.ng-hide-remove.ng-hide-remove-active {
+    opacity: 1;
+}
+
+.dview-animate.ng-hide {
+    display: block!important;
+    opacity: 0;
+}

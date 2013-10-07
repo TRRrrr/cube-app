@@ -18,6 +18,13 @@ module.exports = function (grunt) {
         dest: 'src/dist/js/<%= pkg.name %>.js'
       }
     },
+    less: {
+      dist: {
+        files: {
+          'src/dist/css/<%= pkg.name %>.css': 'src/css/*.less'
+        }
+      }
+    },
     connect: {
       server: {
         options: {
@@ -28,9 +35,13 @@ module.exports = function (grunt) {
       }
     },
     watch: {
-      src: {
+      js: {
         files: ['src/js/**/*.js'],
         tasks: ['concat']
+      },
+      css: {
+        files: ['src/css/*.less'],
+        tasks: ['less']
       }
     }
   });
@@ -38,4 +49,5 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-less');
 };
