@@ -16,28 +16,39 @@
     -o-transform: translate(@x, @y);
 }
 
+
 .perfetch-tip {
     color: gray;
     float: left;
     height: 0px;
 
-    .tip-title {
+    span {
+        text-align: center;
+        width: 100px;
         display: inline-block;
+    }
+}
+
+.perfetch-tip.top-right, .perfetch-tip.top-left {
+    .tip-title {
         border-top-width: 1px;
         border-top-style: solid;
-        width: 100px;
-
-        text-align: center;
-        .rotate(-30deg);
     }
 
     .tip-content {
-        display: inline-block;
         border-bottom-width: 1px;
         border-bottom-style: solid;
-        width: 100px;
+    }
+}
 
-        text-align: center;
-        .translate(-12.79px, -44.3px);
+.perfetch-tip.bottom-right, .perfetch-tip.bottom-left {
+    .tip-title {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+    }
+
+    .tip-content {
+        border-top-width: 1px;
+        border-top-style: solid;
     }
 }
