@@ -9,7 +9,7 @@ module.directive('linetip', function () {
       titleLength: '=?',
       titleAngle: '=?',
       contentLength: '=?',
-      titleText: '@title',
+      titleText: '@',
       content: '@',
       onClick: '=?'
     },
@@ -60,6 +60,12 @@ module.directive('linetip', function () {
                                  $title.height(), scope.contentLength);
       $title.css({ '-webkit-transform': 'rotate(' + posInfo.angle + 'deg)' });
       $content.css({ '-webkit-transform': 'translate(' + posInfo.offsetX + 'px, ' + posInfo.offsetY + 'px)' });
+
+      el.find('span').hover(function () {
+        el.addClass('highlight');
+      }, function () {
+        el.removeClass('highlight');
+      });
     }
   };
 });
