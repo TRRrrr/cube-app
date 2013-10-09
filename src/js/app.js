@@ -9,12 +9,13 @@ module.controller('AppCtrl', ['$scope', '$window', function ($scope, $window) {
 
   var onClickTip = function (index) {
     return function () {
+      debugger;
       $.each($scope.linetips, function (i, el) {
         el.selected = false;
       });
 
       $scope.linetips[index].selected = true;
-      $scope.advicePanel.title = 'Advice for ' + part;
+      $scope.advicePanel.title = 'Advice for ' + $scope.linetips[index].titleText;
     };
   };
 

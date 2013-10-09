@@ -56,15 +56,23 @@ module.directive('linetip', function () {
         };
       };
 
-      $title.width(scope.titleLength);
-      $content.width(scope.contentLength);
+      scope.titleStyle = {
+        width: scope.titleLength
+      };
+
+      scope.contentStyle = {
+        width: scope.contentLength
+      };
 
       var posInfo = calculatePos(scope.direction, scope.titleAngle, scope.titleLength,
                                  $title.height(), scope.contentLength);
-      $title.css({ '-webkit-transform': 'rotate(' + posInfo.angle + 'deg)' });
-      $content.css({ '-webkit-transform': 'translate(' + posInfo.offsetX + 'px, ' + posInfo.offsetY + 'px)' });
+      scope.titleStyle['-webkit-transform'] = 'rotate(' + posInfo.angle + 'deg)';
+      scope.contentStyle['-webkit-transform'] = 'translate(' + posInfo.offsetX + 'px, ' + posInfo.offsetY + 'px)';
 
-      el.css({ left: scope.position[0], top: scope.position[1] });
+      scope.tipStyle = {
+        left: scope.position[0],
+        top: scope.position[1]
+      };
 
       scope.onMouseEnter = function () {
         scope.highlight = 'highlight';
