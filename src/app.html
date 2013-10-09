@@ -1,7 +1,7 @@
 <div ng-controller="AppCtrl">
   <!-- tips -->
   <linetip ng-repeat="tip in linetips" direction="tip.direction" title-length="tip.titleLength"
-           title-angle="tip.titleAngle" position="tip.position"
+           title-angle="tip.titleAngle" position="tip.position" selected="tip.selected"
            content-length="tip.contentLength" content="tip.content"
            title-text="tip.titleText" on-click="tip.onClick">
   </linetip>

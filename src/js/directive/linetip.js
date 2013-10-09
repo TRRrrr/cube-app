@@ -12,7 +12,8 @@ module.directive('linetip', function () {
       titleText: '=?',
       content: '=?',
       position: '=?',
-      onClick: '=?'
+      onClick: '=?',
+      selected: '=?'
     },
     link: function (scope, el, attrs) {
       scope.direction = scope.direction || 'top-right';
@@ -24,9 +25,8 @@ module.directive('linetip', function () {
       scope.position = scope.position || [0, 0];
       scope.onClick = scope.onClick || angular.noop;
 
-
-      var $title = el.find('.tip-title');
-      var $content = el.find('.tip-content');
+      $title = el.find('.tip-title');
+      $content = el.find('.tip-content');
 
       var calculatePos = function (dir, angle, w, h, w2) {
         var curve = Math.abs(angle) * 2 * Math.PI / 360;
@@ -66,10 +66,20 @@ module.directive('linetip', function () {
 
       el.css({ left: scope.position[0], top: scope.position[1] });
 
-      el.find('span').hover(function () {
-        el.addClass('highlight');
-      }, function () {
-        el.removeClass('highlight');
+      scope.onMouseEnter = function () {
+        scope.highlight = 'highlight';
+      };
+
+      scope.onMouseLeave = function () {
+        scope.highlight = '';
+      };
+
+      scope.$watch('selected', function (value) {
+        if (value) {
+          scope.selected = 'selected';
+        } else {
+          scope.selected = '';
+        }
       });
     }
   };
