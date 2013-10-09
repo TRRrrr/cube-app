@@ -3,14 +3,13 @@ module.directive('linetip', function () {
     restrict: 'EACM',
     templateUrl: 'template/linetip.html',
     replace: true,
-    transclude: false,
+    transclude: true,
     scope: {
       direction: '=?',
       titleLength: '=?',
       titleAngle: '=?',
       contentLength: '=?',
       titleText: '=?',
-      content: '=?',
       position: '=?',
       onClick: '=?',
       selected: '=?'
@@ -21,12 +20,8 @@ module.directive('linetip', function () {
       scope.contentLength = scope.contentLength || 100;
       scope.titleAngle = scope.titleAngle || 30;
       scope.titleText = scope.titleText || '';
-      scope.content = scope.content || '';
       scope.position = scope.position || [0, 0];
       scope.onClick = scope.onClick || angular.noop;
-
-      $title = el.find('.tip-title');
-      $content = el.find('.tip-content');
 
       var calculatePos = function (dir, angle, w, h, w2) {
         var curve = Math.abs(angle) * 2 * Math.PI / 360;
@@ -65,7 +60,7 @@ module.directive('linetip', function () {
       };
 
       var posInfo = calculatePos(scope.direction, scope.titleAngle, scope.titleLength,
-                                 $title.height(), scope.contentLength);
+                                 el.find('.tip-title').height(), scope.contentLength);
       scope.titleStyle['-webkit-transform'] = 'rotate(' + posInfo.angle + 'deg)';
       scope.contentStyle['-webkit-transform'] = 'translate(' + posInfo.offsetX + 'px, ' + posInfo.offsetY + 'px)';
 
