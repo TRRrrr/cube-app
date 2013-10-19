@@ -10,9 +10,7 @@ module.directive('linetip', function () {
       titleAngle: '=?',
       contentLength: '=?',
       titleText: '=?',
-      position: '=?',
-      onClick: '=?',
-      selected: '=?'
+      position: '=?'
     },
     link: function (scope, el, attrs) {
       scope.direction = scope.direction || 'top-right';
@@ -21,28 +19,22 @@ module.directive('linetip', function () {
       scope.titleAngle = scope.titleAngle || 30;
       scope.titleText = scope.titleText || '';
       scope.position = scope.position || [0, 0];
-      scope.onClick = scope.onClick || angular.noop;
 
-      var calculatePos = function (dir, angle, w, h, w2) {
+      var calculatePos = function (dir, angle, w1, h2, w2) {
+        // debugger;
         var curve = Math.abs(angle) * 2 * Math.PI / 360;
         var offsetX = 0;
         var offsetY = 0;
 
-        offsetX = 0.5 * w * (1 - Math.cos(curve)) + 0.5 * h * Math.sin(curve);
-        offsetY = 0.5 * w * Math.sin(curve) + 0.5 * h * (1 + Math.cos(curve));
-
-        if (dir === 'top-left' || dir === 'bottom-left') {
-          offsetX += w * Math.cos(curve) + w2 - h * Math.sin(curve);
-        }
-
-        if (dir === 'top-right' || dir === 'top-left') {
-          offsetY = -offsetY;
-        }
-        if (dir === 'top-right' || dir === 'bottom-left') {
+        if (dir === 'top-right') {
           angle = -angle;
-        }
 
-        offsetX = -offsetX;
+          offsetX = -(0.5 * w1 * (1 - Math.cos(curve)));
+          offsetY = 0.5 * (2 * h2 - w1 * Math.sin(curve));
+        } else if (dir === 'top-left') {
+          offsetX = -(0.5 * w1 * (1 + Math.cos(curve)) + w2)
+          offsetY = 0.5 * (2 * h2 - w1 * Math.sin(curve));
+        }
 
         return {
           offsetX: offsetX,
@@ -51,39 +43,25 @@ module.directive('linetip', function () {
         };
       };
 
-      scope.titleStyle = {
-        width: scope.titleLength
+
+      // var posInfo = calculatePos(scope.direction, scope.titleAngle, scope.titleLength,
+      //                            30, scope.contentLength);
+
+      scope.seg1Style = {
+        // width: scope.titleLength,
+        width: 0
+      //   '-webkit-transform': 'rotate(' + posInfo.angle + 'deg)'
       };
 
-      scope.contentStyle = {
-        width: scope.contentLength
+      scope.seg2Style = {
+        width: scope.contentLength,
+      //   '-webkit-transform': 'translate(' + posInfo.offsetX + 'px, ' + posInfo.offsetY + 'px)'
       };
-
-      var posInfo = calculatePos(scope.direction, scope.titleAngle, scope.titleLength,
-                                 el.find('.tip-title').height(), scope.contentLength);
-      scope.titleStyle['-webkit-transform'] = 'rotate(' + posInfo.angle + 'deg)';
-      scope.contentStyle['-webkit-transform'] = 'translate(' + posInfo.offsetX + 'px, ' + posInfo.offsetY + 'px)';
 
       scope.tipStyle = {
         left: scope.position[0],
         top: scope.position[1]
       };
-
-      scope.onMouseEnter = function () {
-        scope.highlight = 'highlight';
-      };
-
-      scope.onMouseLeave = function () {
-        scope.highlight = '';
-      };
-
-      scope.$watch('selected', function (value) {
-        if (value) {
-          scope.selected = 'selected';
-        } else {
-          scope.selected = '';
-        }
-      });
     }
   };
 });

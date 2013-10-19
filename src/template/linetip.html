@@ -1,3 +1,3 @@
-<div class="perfetch-tip" ng-class="[direction, highlight, selected]" ng-style="tipStyle">
-  <span class="tip-title" ng-style="titleStyle" ng-mouseenter="onMouseEnter()" ng-mouseleave="onMouseLeave()" ng-click="onClick()">{{ titleText }}</span><span ng-transclude class="tip-content" ng-style="contentStyle" ng-click="onClick()" ng-mouseenter="onMouseEnter()" ng-mouseleave="onMouseLeave()"></span>
+<div class="perfetch-tip" ng-class="[direction]" ng-style="tipStyle">
+  <div class="tip-seg1" ng-style="seg1Style"></div><div ng-transclude class="tip-seg2" ng-style="seg2Style"></div>
 </div>

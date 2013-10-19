@@ -1,7 +1,11 @@
 @import "config.less";
 
+@panel-border-color: @weak-blue;
+@panel-title-color: @main-blue;
+
 .perfetch-panel.panel {
     border-radius: 0;
+    border-color: @panel-border-color;
     .panel-heading {
         background-color: white;
         border: 0;
@@ -9,28 +13,6 @@
 
     .panel-title {
         font-size: 20px;
-    }
-}
-
-@goal-border-color: rgb(251, 211, 188);
-@goal-title-color: rgb(255, 112, 0);
-
-.perfetch-panel.panel.panel-goal {
-    border-color: @goal-border-color;
-
-    .panel-title {
-        color: @goal-title-color;
-    }
-}
-
-
-@trend-border-color: rgb(131, 224, 213);
-@trend-title-color: rgb(0, 195, 168);
-
-.perfetch-panel.panel.panel-trend {
-    border-color: @trend-border-color;
-
-    .panel-title {
-        color: @trend-title-color;
+        color: @panel-title-color;
     }
 }

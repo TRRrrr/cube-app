@@ -1,5 +1,74 @@
+@import "config.less";
+
+
 body {
     padding-top: 70px;
     background-color: rgb(241, 243, 245);
+}
+
+
+.left-arrow {
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-right: 15px solid black;
+    border-left: none;
+    width: 0px;
+    height: 0px;
+    display: inline-block;
+    border-right-color: gray;
+}
+
+.body-change.right {
+    font-size: 20px;
+
+    div {
+        display: inline-block;
+    }
+
+    .value-change {
+        padding: 2px 5px;
+        color: gray;
+        float: right;
+        background-color: @weak-blue;
+
+        .new-value {
+            color: green;
+        }
+    }
+
+    .title {
+        display: block;
+        font-size: 15px;
+        color: @main-blue;
+        text-align: center;
+    }
+
+}
+
+.body-change.left {
+    font-size: 20px;
+    float: left;
+
+    div {
+        display: inline-block;
+    }
+
+    .value-change {
+        padding: 0 5px;
+        color: gray;
+        float: left;
+        background-color: @weak-blue;
+
+        .new-value {
+            color: green;
+        }
+    }
+
+    .title {
+        float: right;
+        font-size: 15px;
+        color: @main-blue;
+        margin-left: 20px;
+    }
 
 }

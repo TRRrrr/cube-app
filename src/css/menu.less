@@ -1,24 +1,34 @@
 @import "config.less";
 
+@menu-background-color: rgb(225, 226, 228);
+@nav-background-color: rgb(49, 58, 69);
+@brand-color: rgb(49, 58, 69);
+
 .navbar-inverse {
-    background-color: rgb(225, 226, 228);
+    background-color: @menu-background-color;
 
     .navbar-nav>.active>a,
     .navbar-nav>.active>a:hover,
     .navbar-nav>.active>a:focus {
         color: @main-blue;
-        background-color: rgb(241, 243, 245);
+        background-color: @body-background-color;
+    }
+
+    .navbar-nav > li > a:hover {
+        color: white;
+        background-color: @nav-background-color;
     }
 
     .navbar-nav>li>a {
         color: @main-blue;
-        background-color: rgb(49, 58, 69);
+        background-color: @nav-background-color;
         padding: 15px 30px;
         font-size: 18px;
     }
+
     border: 0;
 
     .navbar-brand {
-        color: rgb(49, 58, 69);
+        color: @brand-color;
     }
 }
