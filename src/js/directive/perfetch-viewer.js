@@ -52,6 +52,7 @@ module.directive('perfetchViewer', function () {
 	var myCanvas = document.getElementById("example");
 	renderer = new THREE.WebGLRenderer( { antialias: true, alpha: false} );
 	renderer.setSize( el.width(), el.height() );
+
 	renderer.setClearColor( scene.fog.color, 1 );
 
 	renderer.gammaInput = true;
@@ -207,12 +208,10 @@ module.directive('perfetchViewer', function () {
       }
 
       function onWindowResize() {
-
 	// camera.aspect = window.innerWidth / window.innerHeight;
 	// camera.updateProjectionMatrix();
 
 	// renderer.setSize( el.width(), el.height() );
-
       }
 
       function animate() {
