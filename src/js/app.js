@@ -1,4 +1,6 @@
-module.controller('AppCtrl', ['$scope', '$window', '$http', function ($scope, $window, $http) {
+module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function ($scope, $window, $http, config) {
+  $scope.config = config;
+
   $scope.linetips = [
     // {
     //   id: 'wrist',
