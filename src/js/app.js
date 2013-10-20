@@ -1,7 +1,4 @@
 module.controller('AppCtrl', ['$scope', '$window', '$http', function ($scope, $window, $http) {
-  // $scope.bodyParts = [
-  // ]
-
   $scope.linetips = [
     // {
     //   id: 'wrist',
@@ -27,9 +24,7 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', function ($scope, $w
     }
   ];
 
-  setTimeout(function () {
-    $scope.progress = 70;
-  }, 1);
+  $scope.progress = 70;
 
   // $http({ method: 'GET', url: '/rest/user/fuq/record'}).
   //   success(function (data) {
