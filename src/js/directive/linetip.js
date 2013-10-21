@@ -5,35 +5,25 @@ module.directive('linetip', function () {
     replace: true,
     transclude: true,
     scope: {
-      direction: '=?',
-      titleLength: '=?',
-      titleAngle: '=?',
-      contentLength: '=?',
-      titleText: '=?',
-      position: '=?'
+      seg1Len: '=?',
+      seg2Len: '=?',
+      seg1Angle: '=?',
+      pos: '=?',
+      direction: '=?'
     },
     link: function (scope, el, attrs) {
-      scope.direction = scope.direction || 'top-right';
-      scope.titleLength = scope.titleLength || 100;
-      scope.contentLength = scope.contentLength || 100;
-      scope.titleAngle = scope.titleAngle || 30;
-      scope.titleText = scope.titleText || '';
-      scope.position = scope.position || [0, 0];
-
-      var calculatePos = function (dir, angle, w1, h2, w2) {
-        // debugger;
+      var calculatePos = function (direction, angle, s1, s2) {
         var curve = Math.abs(angle) * 2 * Math.PI / 360;
         var offsetX = 0;
         var offsetY = 0;
 
-        if (dir === 'top-right') {
+        if (direction === 'top-right') {
           angle = -angle;
-
-          offsetX = -(0.5 * w1 * (1 - Math.cos(curve)));
-          offsetY = 0.5 * (2 * h2 - w1 * Math.sin(curve));
-        } else if (dir === 'top-left') {
-          offsetX = -(0.5 * w1 * (1 + Math.cos(curve)) + w2)
-          offsetY = 0.5 * (2 * h2 - w1 * Math.sin(curve));
+          offsetX = 0.5 * s1 + 0.5 * s1 * Math.cos(curve);
+          offsetY = -0.5 * s1 * Math.sin(curve) - 1;
+        } else if (direction === 'top-left') {
+          offsetX = -(s2 - 0.5 * s1 * (1 - Math.cos(curve)));
+          offsetY = -0.5 * s1 * Math.sin(curve) - 1;
         }
 
         return {
@@ -43,25 +33,34 @@ module.directive('linetip', function () {
         };
       };
 
-
-      // var posInfo = calculatePos(scope.direction, scope.titleAngle, scope.titleLength,
-      //                            30, scope.contentLength);
+      var posInfo = calculatePos(scope.direction, scope.seg1Angle, scope.seg1Len, scope.seg2Len);
 
       scope.seg1Style = {
-        // width: scope.titleLength,
-        width: 0
-      //   '-webkit-transform': 'rotate(' + posInfo.angle + 'deg)'
+        width: scope.seg1Len,
+        '-webkit-transform': 'rotate(' + posInfo.angle + 'deg)'
       };
 
       scope.seg2Style = {
-        width: scope.contentLength,
-      //   '-webkit-transform': 'translate(' + posInfo.offsetX + 'px, ' + posInfo.offsetY + 'px)'
+        width: scope.seg2Len,
+        '-webkit-transform': 'translate(' + posInfo.offsetX + 'px, ' + posInfo.offsetY + 'px)'
       };
 
       scope.tipStyle = {
-        left: scope.position[0],
-        top: scope.position[1]
+        left: scope.pos[0],
+        top: scope.pos[1]
       };
+
+      setTimeout(function () {
+        var $seg2 = el.find('.tip-seg2');
+        var offset = $seg2.offset();
+
+        el.find('.tip-content').css({
+          position: 'relative',
+          left: posInfo.offsetX,
+          top: posInfo.offsetY - 1,
+          width: $seg2.width()
+        });
+      }, 1);
     }
   };
 });

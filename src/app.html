@@ -1,13 +1,34 @@
 <div ng-controller="AppCtrl">
   <!-- tips -->
-  <div class="body-change left linetip" tip-len="100" tip-angle="30" tip-pos="left">
-    <div class="title">{{tip.titleText}}</div>
-    <div class="value-change">
-      <span class="old-value">{{tip.oldValue}}</span>
-      <span class="glyphicon glyphicon-arrow-right" ></span>
-      <span class="new-value">{{tip.value}}</span>
+  <!-- <div class="body-change left linetip" tip-len="100" tip-angle="30" tip-pos="left"> -->
+  <!--   <div class="title">{{tip.titleText}}</div> -->
+  <!--   <div class="value-change"> -->
+  <!--     <span class="old-value">{{tip.oldValue}}</span> -->
+  <!--     <span class="glyphicon glyphicon-arrow-right" ></span> -->
+  <!--     <span class="new-value">{{tip.value}}</span> -->
+  <!--   </div> -->
+  <!-- </div> -->
+
+  <linetip ng-repeat="tip in linetips" seg1-len="tip.seg1Len" seg1-angle="tip.angle" seg2-len="tip.seg2Len"
+           direction="tip.direction" pos="tip.position">
+    <div class="body-change right" ng-if="tip.direction == 'top-right'">
+      <div class="value-change">
+        <span class="new-value">{{tip.value}}</span>
+        <span class="glyphicon glyphicon-arrow-left" ></span>
+        <span class="old-value">{{tip.oldValue}}</span>
+      </div>
+      <div class="title">{{tip.titleText}}</div>
     </div>
-  </div>
+
+    <div class="body-change left" ng-if="tip.direction == 'top-left'">
+      <div class="value-change">
+        <span class="old-value">{{tip.oldValue}}</span>
+        <span class="glyphicon glyphicon-arrow-right" ></span>
+        <span class="new-value">{{tip.value}}</span>
+      </div>
+      <div class="title">{{tip.titleText}}</div>
+    </div>
+  </linetip>
 
   <div class="row" id="#content">
     <!-- left -->
