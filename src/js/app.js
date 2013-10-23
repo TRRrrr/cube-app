@@ -84,4 +84,18 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
   //     console.log('error');
   //   });
 
+  $scope.chartData = [[3,7,9,1,4,6,8,2,5]];
+  $scope.chartOptions = {
+    seriesDefaults: {
+      // Make this a pie chart.
+      // renderer: jQuery.jqplot.CanvasAxisLabelRenderer,
+      rendererOptions: {
+        // Put data labels on the pie slices.
+        // By default, labels show the percentage of the slice.
+        showDataLabels: true
+      }
+    },
+    legend: { show: true, location: 'e' }
+  };
+
 }]);

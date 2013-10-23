@@ -4,16 +4,19 @@ module.directive('uiChart', function () {
     template: '<div></div>',
     replace: true,
     link: function (scope, elem, attrs) {
+      var height = scope.$eval(attrs.height);
+      elem.height(height);
+
       var renderChart = function () {
-        var data = scope.$eval(attrs.chartData);
+        var data = scope.$eval(attrs.data);
         elem.html('');
         if (!angular.isArray(data)) {
           return;
         }
 
         var opts = {};
-        if (!angular.isUndefined(attrs.chartOptions)) {
-          opts = scope.$eval(attrs.chartOptions);
+        if (!angular.isUndefined(attrs.options)) {
+          opts = scope.$eval(attrs.options);
           if (!angular.isObject(opts)) {
             throw 'Invalid ui.chart options attribute';
           }
@@ -22,11 +25,11 @@ module.directive('uiChart', function () {
         elem.jqplot(data, opts);
       };
 
-      scope.$watch(attrs.chartData, function () {
+      scope.$watch(attrs.data, function () {
         renderChart();
       }, true);
 
-      scope.$watch(attrs.chartOptions, function () {
+      scope.$watch(attrs.options, function () {
         renderChart();
       });
     }
