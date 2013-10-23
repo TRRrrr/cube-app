@@ -95,7 +95,18 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
         showDataLabels: true
       }
     },
-    legend: { show: true, location: 'e' }
+    legend: { show: false },
+    grid: {
+      background: 'rgb(224, 239, 244)',
+      shadow: false,
+      borderColor: 'rgb(163, 227, 238)'
+    }
   };
+
+
+  $scope.advices = [
+    "10 crunches a day",
+    "30 push-ups a day"
+  ];
 
 }]);

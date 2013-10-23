@@ -18,24 +18,11 @@ body {
     border-right-color: gray;
 }
 
-.body-change.right {
+.body-change {
     font-size: 20px;
-
     div {
         display: inline-block;
     }
-
-    .value-change {
-        padding: 2px 5px;
-        color: gray;
-        float: right;
-        background-color: @weak-blue;
-
-        .new-value {
-            color: green;
-        }
-    }
-
     .title {
         display: block;
         font-size: 15px;
@@ -43,35 +30,31 @@ body {
         text-align: center;
     }
 
+    .value-change {
+        cursor: pointer;
+        padding: 0 5px;
+        color: gray;
+        background-color: @weak-blue;
+
+        .new-value {
+            color: green;
+        }
+    }
 }
 
 .body-change.left {
-    font-size: 20px;
-
-    div {
-        display: inline-block;
-    }
-
     .value-change {
-        padding: 0 5px;
-        color: gray;
         float: left;
-        background-color: @weak-blue;
-
-        .new-value {
-            color: green;
-        }
     }
+}
 
-    .title {
-        display: block;
-        font-size: 15px;
-        color: @main-blue;
-        text-align: center;
+.body-change.right {
+    .value-change {
+        float: right;
     }
-
 }
 
 #canvas-container {
     min-height: 600px;
+    background-color: white;
 }

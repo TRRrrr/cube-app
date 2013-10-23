@@ -51,7 +51,7 @@
           <h3 class="panel-title">Advice</h3>
         </div>
         <div class="panel-body">
-          <p>What ratios to provide?</p>
+          <div ng-repeat="advice in advices">{{ advice }}</div>
         </div>
       </div>
 
@@ -60,7 +60,7 @@
           <h3 class="panel-title">Trend</h3>
         </div>
         <div class="panel-body">
-          <ui-chart data="chartData" options="chartOptions" height="250" />
+          <ui-chart data="chartData" options="chartOptions" height="200" />
         </div>
       </div>
 
