@@ -18,8 +18,9 @@ module.directive('perfetchViewer', function () {
 
       function init() {
         debugger;
+
 	moveCameraFlag = false;
-        container = el[0];
+        container = el[0];console.log();
 	myButton = document.createElement( 'input');
 	myButton.value = "Click me";
 	myButton.type = "button";
@@ -28,7 +29,7 @@ module.directive('perfetchViewer', function () {
 	myButton.addEventListener("click", function(){setMoveCamera();});
         el.append(myButton);
 
-	camera = new THREE.PerspectiveCamera( 35, window.innerWidth / window.innerHeight, 1, 15 );
+	camera = new THREE.PerspectiveCamera( 35, el.width() / el.height(), 1, 15 );
 	camera.position.set( 2, 0.15, 2 );
 
 	controls = new THREE.OrbitControls( camera );
@@ -88,8 +89,8 @@ module.directive('perfetchViewer', function () {
 	  //var material = new THREE.MeshPhongMaterial( { ambient: 0xAAAAAA, color: 0xFFDFC4, specular: 0x333333, shininess: 100 } );
 	  mesh = new THREE.Mesh( geometry, material );
 
-	  mesh.position.set( 0, 0.40, 0 );
-	  mesh.rotation.set( 0, 0, 0 );
+	  mesh.position.set( 0.45, 0.40, 0.1 );
+	  mesh.rotation.set( 0, Math.PI/8, 0 );
 	  mesh.scale.set( 1, 1, 1 );
 
 	  mesh.castShadow = true;
