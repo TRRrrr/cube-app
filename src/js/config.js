@@ -1,5 +1,5 @@
 module.value('config', {     // global state
-  debug: true,
+  debug: false,
   companyName: 'Perfetch',
   menus: [
     {
@@ -12,5 +12,8 @@ module.value('config', {     // global state
       url: 'stats.html'
     }
   ],
-  homePage: 'home'
+  homePage: 'home',
+  toType: function(obj) {
+  return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
+  }
 });

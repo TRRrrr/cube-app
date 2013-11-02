@@ -10,7 +10,7 @@ module.directive('perfetchViewer', function () {
 
       if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-      var container, stats, mesh, myButton, moveCameraFlag;
+      var container, stats, mesh, myButton, moveCameraFlag, clock, lastX, lastZ;
 
       var camera, cameraTarget, scene, renderer, control;
       init();
@@ -18,7 +18,8 @@ module.directive('perfetchViewer', function () {
 
       function init() {
         debugger;
-
+        lastX = 0;
+        lastZ = Math.PI*2;
 	moveCameraFlag = false;
         container = el[0];console.log();
 	myButton = document.createElement( 'input');
@@ -30,10 +31,10 @@ module.directive('perfetchViewer', function () {
         el.append(myButton);
 
 	camera = new THREE.PerspectiveCamera( 35, el.width() / el.height(), 1, 15 );
-	camera.position.set( 2, 0.15, 2 );
+	camera.position.set( Math.cos(lastX) * 3, 0.15, Math.sin(lastZ) * 3 );
 
-	controls = new THREE.OrbitControls( camera );
-	controls.addEventListener( 'change', render );
+	//controls = new THREE.OrbitControls( camera );
+	//controls.addEventListener( 'change', render );
 
 	cameraTarget = new THREE.Vector3( 0, 0.3, 0 );
 
@@ -89,8 +90,8 @@ module.directive('perfetchViewer', function () {
 	  //var material = new THREE.MeshPhongMaterial( { ambient: 0xAAAAAA, color: 0xFFDFC4, specular: 0x333333, shininess: 100 } );
 	  mesh = new THREE.Mesh( geometry, material );
 
-	  mesh.position.set( 0.45, 0.40, 0.1 );
-	  mesh.rotation.set( 0, Math.PI/8, 0 );
+	  mesh.position.set( 0, 0.40, 0 );
+	  mesh.rotation.set( 0, Math.PI/2, 0 );
 	  mesh.scale.set( 1, 1, 1 );
 
 	  mesh.castShadow = true;
@@ -215,27 +216,26 @@ module.directive('perfetchViewer', function () {
 	// renderer.setSize( el.width(), el.height() );
       }
 
-      function animate() {
+    function animate() {
 
-	requestAnimationFrame( animate );
-	if(moveCameraFlag){
-	  moveCamera();
-	}
-	render();
-	stats.update();
-	controls.update();
+		requestAnimationFrame( animate );
+		if(moveCameraFlag){
+		  moveCamera();
+		}
+		render();
+		stats.update();
+		//controls.update();
 
-      }
+    }
 
-      function render() {
+    function render() {
+		camera.lookAt( cameraTarget );
+		//control.update();
+		renderer.render( scene, camera );
 
-	camera.lookAt( cameraTarget );
-	//control.update();
-	renderer.render( scene, camera );
-
-	//keyboard
-	var start = 0;
-	document.onkeydown=function(e){e = e || window.event;
+		//keyboard
+		var start = 0;
+		document.onkeydown=function(e){e = e || window.event;
   				       var charCode = e.charCode || e.keyCode,
       				       character = String.fromCharCode(charCode);
 				       console.log(charCode);
@@ -245,25 +245,32 @@ module.directive('perfetchViewer', function () {
 				       }
 				      }
 
-	document.onkeyup = function(e){
-	  var charCode = e.charCode || e.keyCode,
-      	  character = String.fromCharCode(charCode);
-	  console.log(charCode);
-	}
-      }
+		document.onkeyup = function(e){
+		  var charCode = e.charCode || e.keyCode,
+	      	  character = String.fromCharCode(charCode);
+		  console.log(charCode);
+		}
+    }
 
-      function moveCamera(){
-	console.log("1");
-	var timer = Date.now() * 0.0005;
+    function moveCamera(){
+    	var dt = clock.getDelta();
+    	console.log(dt);
+    	lastX = lastX + dt;
+    	lastZ = lastZ + dt;
+		camera.position.x = Math.cos( lastX ) * 3;
+		camera.position.z = Math.sin( lastZ ) * 3;
+		camera.lookAt( cameraTarget );
+		console.log(camera.position);
+    }
 
-	camera.position.x = Math.cos( timer ) * 3;
-	camera.position.z = Math.sin( timer ) * 3;
-
-	//camera.lookAt( cameraTarget );
-      }
-      function setMoveCamera(){
-	moveCameraFlag = true;
-      }
+    function setMoveCamera(){
+      	if(!moveCameraFlag){
+      		clock = new THREE.Clock();
+			moveCameraFlag = true;
+		}else{
+			moveCameraFlag = false;
+		}
+    }
 
       // Rotate an object around an arbitrary axis in object space
       var rotObjectMatrix;
