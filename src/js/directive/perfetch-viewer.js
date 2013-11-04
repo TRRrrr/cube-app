@@ -20,15 +20,15 @@ module.directive('perfetchViewer', function () {
         debugger;
         lastX = 0;
         lastZ = Math.PI*2;
-	moveCameraFlag = false;
-        container = el[0];console.log();
-	myButton = document.createElement( 'input');
-	myButton.value = "Click me";
-	myButton.type = "button";
-	myButton.style.position = "absolute";
-	myButton.style.left = "100px";
-	myButton.addEventListener("click", function(){setMoveCamera();});
-        el.append(myButton);
+		moveCameraFlag = false;
+	    container = el[0];console.log();
+		myButton = document.createElement( 'input');
+		myButton.value = "Click me";
+		myButton.type = "button";
+		myButton.style.position = "absolute";
+		myButton.style.left = "100px";
+		myButton.addEventListener("click", function(){setMoveCamera();});
+	    el.append(myButton);
 
 	camera = new THREE.PerspectiveCamera( 35, el.width() / el.height(), 1, 15 );
 	camera.position.set( Math.cos(lastX) * 3, 0.15, Math.sin(lastZ) * 3 );
@@ -90,7 +90,7 @@ module.directive('perfetchViewer', function () {
 	  //var material = new THREE.MeshPhongMaterial( { ambient: 0xAAAAAA, color: 0xFFDFC4, specular: 0x333333, shininess: 100 } );
 	  mesh = new THREE.Mesh( geometry, material );
 
-	  mesh.position.set( 0, 0.40, 0 );
+	  mesh.position.set( 0, 0.40, -0.28 );
 	  mesh.rotation.set( 0, Math.PI/2, 0 );
 	  mesh.scale.set( 1, 1, 1 );
 

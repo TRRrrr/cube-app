@@ -72,17 +72,19 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
       value: 70,
       oldValue: 80
     },
-    setValue: function(currentArry, lastArry){
+  };
+
+$scope.setLineTipValue = function(currentArry, lastArry){
       var currentValues = currentArry;
       var lastValues = lastArry;
-      var that = this;
+      var that = this.linetips;
       /*if( toType(currentValues)!="array" || toType(lastValues)!="array"){
         console.log("data input error");
         return false;
       }*/  //Defined toType in config.js as a globle. why couldn`t call it here.
       function applyValue(a,b){
-            that[a].value = currentValues[b];
-            that[a].oldValue = lastValues[b];
+        that[a].value = currentValues[b];
+        that[a].oldValue = lastValues[b];
       }
       
       return function(){
@@ -92,7 +94,6 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
         }
       }
     },
-  };
 
 $scope.bodyMesureHistory ={
     wrist:[[3,7,9,1,4,6,8,2,5]],
@@ -110,7 +111,7 @@ $scope.bodyMesureHistory ={
  /*  $http({ method: 'GET', url: '/rest/user/fuq/record'}).
      success(function (data) {
        console.log(data);
-       $scope.linetips.setValue(data[data.length-1],data[data.length-2]);
+       $scope.setLineTipValue(data[data.length-1],data[data.length-2])();
        $scope.bodyMesureHistory = {}; //clean up.
        for( var i = 0; i < data.length){
           var counter = 1;
@@ -134,12 +135,11 @@ $scope.bodyMesureHistory ={
 */
 //fake data input.
   var currentArry = [40,40,30,40,40,40,40]; //fake data of: data[data.length-1]
-  var lastArry = [50,50,50,60,50,50,50]; //fack data of: data[data.length-2]
-  $scope.linetips.setValue(currentArry,lastArry)();
+  var lastArry = [10,50,50,60,50,50,50]; //fack data of: data[data.length-2]
+  $scope.setLineTipValue(currentArry,lastArry)();
 //
   $scope.progress = 70;
   
-  console.log($scope.bodyMesureHistory);
   $scope.chartData;
   $scope.setChartData = function(a){
     this.chartData = this.bodyMesureHistory[a];
