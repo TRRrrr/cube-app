@@ -73,7 +73,9 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
       oldValue: 80
     },
   };
-
+$scope.showTrend = function (){
+  alert();
+}
 $scope.setLineTipValue = function(currentArry, lastArry){
       var currentValues = currentArry;
       var lastValues = lastArry;
