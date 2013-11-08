@@ -3,11 +3,7 @@ module.directive('perfetchViewer', function () {
     restrict: 'EACM',
     replace: false,
     transclude: false,
-    scope: {
-      model: '@'
-    },
     link: function (scope, el, attrs) {
-
       if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
       var container, stats, mesh, myButton, moveCameraFlag, clock, lastX, lastZ;
@@ -116,7 +112,13 @@ module.directive('perfetchViewer', function () {
 	    scene.add( control.gizmo );*/
 
 	} );
-	loader.load( '3dmodel/zhengXian.stl' );
+
+        if (!el.attr('model')) {
+          return;
+        }
+
+	loader.load( el.attr('model') );
+
 
         /*
 
