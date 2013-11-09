@@ -2,8 +2,16 @@ module.directive('perfetchViewer', function () {
   return {
     restrict: 'EACM',
     replace: false,
+    scope: {
+      model: '@'
+    },
     transclude: false,
     link: function (scope, el, attrs) {
+      scope.$watch('model', function (newVal, oldVal) {
+        // TODO reload model
+        console.log('reload model', newVal);
+      });
+
       if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
       var container, stats, mesh, myButton, moveCameraFlag, clock, lastX, lastZ;
@@ -113,11 +121,8 @@ module.directive('perfetchViewer', function () {
 
 	} );
 
-        if (!el.attr('model')) {
-          return;
-        }
 
-	loader.load( el.attr('model') );
+	loader.load(scope.model);
 
 
         /*
