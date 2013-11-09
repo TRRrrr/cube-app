@@ -23,9 +23,12 @@
   <div class="row" id="#content">
     <!-- left -->
     <div class="col-md-8">
-      <button style="position: absolute; left: 50%; bottom: 10px;">Left</button>
-      <button style="position: absolute; left: 50%; bottom: 10px;">Reset</button>
-      <button style="position: absolute; left: 50%; bottom: 10px;">Right</button>
+      <div style="position: absolute; left: 50%; bottom: 10px" id="control-btns">
+        <button ng-click="onTurn('left')">Left</button>
+        <button ng-click="onReset()">Reset</button>
+        <button ng-click="onTurn('right')">Right</button>
+      </div>
+
       <div id="canvas-container" perfetch-viewer model="{{ modelUrl }}" ng-if="!config.debug">
       </div>
     </div>

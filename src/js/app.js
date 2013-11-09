@@ -172,4 +172,21 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
     "30 push-ups a day"
   ];
 
+  var $controlBtns = $('#control-btns');
+  $controlBtns.css('margin-left', $controlBtns.width() / -2);
+
+  $scope.onTurn = function (dir) {
+    console.log('turn', dir);
+
+    // TODO turn events
+    if (dir === 'left') {
+    } else if (dir === 'right') {
+    }
+  };
+
+  $scope.onReset = function () {
+    console.log('reset');
+    // TODO reset model
+  };
+
 }]);
