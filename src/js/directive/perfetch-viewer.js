@@ -1,14 +1,16 @@
 module.directive('perfetchViewer', function () {
-<<<<<<< HEAD
-	return {
-	    restrict: 'EACM',
-	    replace: false,
-	    transclude: false,
-	    scope: {
-	      model: '@'
-	    },
-	    link: function (scope, el, attrs) {
-
+ return {
+    restrict: 'EACM',
+    replace: false,
+    scope: {
+      model: '@'
+    },
+    transclude: false,
+    link: function (scope, el, attrs) {
+      scope.$watch('model', function (newVal, oldVal) {
+        // TODO reload model
+        console.log('reload model', newVal);
+      });
 	      if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
 	      var container, stats, mesh, myButton, moveCameraFlag, clock, lastX, lastZ;
@@ -68,69 +70,6 @@ module.directive('perfetchViewer', function () {
 
 
 			// ASCII file
-=======
-  return {
-    restrict: 'EACM',
-    replace: false,
-    scope: {
-      model: '@'
-    },
-    transclude: false,
-    link: function (scope, el, attrs) {
-      scope.$watch('model', function (newVal, oldVal) {
-        // TODO reload model
-        console.log('reload model', newVal);
-      });
-
-      if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-
-      var container, stats, mesh, myButton, moveCameraFlag, clock, lastX, lastZ;
-
-      var camera, cameraTarget, scene, renderer, control;
-      init();
-      animate();
-
-      function init() {
-        debugger;
-        lastX = 0;
-        lastZ = Math.PI*2;
-		moveCameraFlag = false;
-	    container = el[0];console.log();
-		myButton = document.createElement( 'input');
-		myButton.value = "Click me";
-		myButton.type = "button";
-		myButton.style.position = "absolute";
-		myButton.style.left = "100px";
-		myButton.addEventListener("click", function(){setMoveCamera();});
-	    el.append(myButton);
-
-	camera = new THREE.PerspectiveCamera( 35, el.width() / el.height(), 1, 15 );
-	camera.position.set( Math.cos(lastX) * 3, 0.15, Math.sin(lastZ) * 3 );
-
-	//controls = new THREE.OrbitControls( camera );
-	//controls.addEventListener( 'change', render );
-
-	cameraTarget = new THREE.Vector3( 0, 0.3, 0 );
-
-	scene = new THREE.Scene();
-	scene.fog = new THREE.Fog( 0x72645b, 2, 15 );
-
-
-	// Ground
-
-	var plane = new THREE.Mesh( new THREE.PlaneGeometry( 40, 40 ), new THREE.MeshPhongMaterial( { ambient: 0x999999, color: 0x999999, specular: 0x101010 } ) );
-	plane.rotation.x = -Math.PI/2;
-	plane.position.y = -0.5;
-	scene.add( plane );
-
-	plane.receiveShadow = true;
-	// renderer
-	var myCanvas = document.getElementById("example");
-	renderer = new THREE.WebGLRenderer( { antialias: true, alpha: false} );
-	renderer.setSize( el.width(), el.height() );
-
-	renderer.setClearColor( scene.fog.color, 1 );
->>>>>>> 5b12e6895c3d685cdd47cc18add7185e2a160f4a
 
 			var loader = new THREE.STLLoader();
 			loader.addEventListener( 'load', function ( event ) {
@@ -191,57 +130,7 @@ module.directive('perfetchViewer', function () {
 
 			} );
 			loader.load( '3dmodel/zhengXian.stl' );
-
-		        /*
-
-			// Binary files
-
-			var material = new THREE.MeshPhongMaterial( { ambient: 0x555555, color: 0xAAAAAA, specular: 0x111111, shininess: 200 } );
-
-			var loader = new THREE.STLLoader();
-			loader.addEventListener( 'load', function ( event ) {
-
-			var geometry = event.content;
-			var mesh = new THREE.Mesh( geometry, material );
-
-<<<<<<< HEAD
-			mesh.position.set( 0, - 0.37, - 0.6 );
-			mesh.rotation.set( - Math.PI / 2, 0, 0 );
-			mesh.scale.set( 2, 2, 2 );
-=======
-	} );
-
-
-	loader.load(scope.model);
-
->>>>>>> 5b12e6895c3d685cdd47cc18add7185e2a160f4a
-
-			mesh.castShadow = true;
-			mesh.receiveShadow = true;
-
-			scene.add( mesh );
-
-			} );
-			loader.load( './models/stl/binary/pr2_head_pan.stl' );
-
-			var loader = new THREE.STLLoader();
-			loader.addEventListener( 'load', function ( event ) {
-
-			var geometry = event.content;
-			var mesh = new THREE.Mesh( geometry, material );
-
-			mesh.position.set( 0.136, - 0.37, - 0.6 );
-			mesh.rotation.set( - Math.PI / 2, 0.3, 0 );
-			mesh.scale.set( 2, 2, 2 );
-
-			mesh.castShadow = true;
-			mesh.receiveShadow = true;
-
-			scene.add( mesh );
-
-			} );
-			loader.load( './models/stl/binary/pr2_head_tilt.stl' );
-		        */
+			//loader.load(scope.model);
 
 			// Lights
 

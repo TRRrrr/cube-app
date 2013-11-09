@@ -80,7 +80,7 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
       history: [0]
     },
   };
-<<<<<<< HEAD
+
 $scope.showTrend = function (tip){
   this.setChartData(tip);
 };
@@ -112,31 +112,8 @@ $scope.setLineTipValue = function(data){
         for(var i = 0; i < 2; i++ ){console.log("hi");}//history part todo
       }
     };
-=======
-
-  $scope.setLineTipValue = function(currentArry, lastArry){
-    var currentValues = currentArry;
-    var lastValues = lastArry;
-    var that = this.linetips;
-    /*if( toType(currentValues)!="array" || toType(lastValues)!="array"){
-      console.log("data input error");
-      return false;
-      }*/  //Defined toType in config.js as a globle. why couldn`t call it here.
-    function applyValue(a,b){
-      that[a].value = currentValues[b];
-      that[a].oldValue = lastValues[b];
-    }
-
-    return function(){
-      var body = ["wrist","neck","chest","arm","thigh","calf","hip"];
-      for(var i = 0; i < body.length;i++){
-        applyValue(body[i],i);
-      }
-    }
-  };
 
   $scope.modelUrl = '3dmodel/zhengXian.stl';
->>>>>>> 5b12e6895c3d685cdd47cc18add7185e2a160f4a
 
   $scope.bodyMesureHistory = {
     wrist:[[3,7,9,1,4,6,8,2,5]],
@@ -151,54 +128,21 @@ $scope.setLineTipValue = function(data){
     modelAddrs: [[3,7,9,1,4,6,8,2,5]]
   };
 
-<<<<<<< HEAD
- /*  $http({ method: 'GET', url: '/rest/user/fuq/record'}).
-     success(function (data) {
-       console.log(data);
-       if(data.length == 1){$scope.setLineTipValue(0)()}
-       $scope.setLineTipValue(data)();
-     }).
-     error(function () {
-       console.log('error');
-     });
-*/
 //fake data input.
   var currentArry = [40,40,30,40,40,40,40]; //fake data of: data[data.length-1]
   var lastArry = [10,50,50,60,50,50,50]; //fack data of: data[data.length-2]
   $scope.setLineTipValue([currentArry,lastArry])();
 //
-=======
-  /*  $http({ method: 'GET', url: '/rest/user/fuq/record'}).
+/*  $http({ method: 'GET', url: '/rest/user/fuq/record'}).
       success(function (data) {
-      console.log(data);
-      $scope.setLineTipValue(data[data.length-1],data[data.length-2])();
-      $scope.bodyMesureHistory = {}; //clean up.
-      for( var i = 0; i < data.length){
-      var counter = 1;
-      //key = 1: skip userid.
-      for( var key = 1 in $scope.bodyMesureHistory){
-      var obj = $scope.bodyMesureHistory[key];
-      var dt = data[i];
-      if(dt[counter]){
-      obj.push(dt[counter]);
-      counter++;
-      }else{
-      console.log("Input error");
-      return false;
-      }
-      }
-      }
+        console.log(data);
+        if(data.length == 1){$scope.setLineTipValue(0)()}
+        $scope.setLineTipValue(data)();
       }).
       error(function () {
-      console.log('error');
+       console.log('error');
       });
-  */
-  //fake data input.
-  var currentArry = [40,40,30,40,40,40,40]; //fake data of: data[data.length-1]
-  var lastArry = [10,50,50,60,50,50,50]; //fack data of: data[data.length-2]
-  $scope.setLineTipValue(currentArry,lastArry)();
-  //
->>>>>>> 5b12e6895c3d685cdd47cc18add7185e2a160f4a
+*/
   $scope.progress = 70;
 
   $scope.chartData;
