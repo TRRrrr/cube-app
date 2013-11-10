@@ -1,6 +1,6 @@
 <div ng-controller="AppCtrl">
   <linetip ng-repeat="tip in linetips" seg1-len="tip.seg1Len" seg1-angle="tip.angle" seg2-len="tip.seg2Len"
-           direction="tip.direction" pos="tip.position">
+           direction="tip.direction" pos="tip.position" ng-hide="config.hideTip">
     <div class="body-change right" ng-if="tip.direction == 'top-right'">
       <div class="value-change" ng-click="showTrend(tip)">
         <span class="new-value">{{tip.value}}</span>
@@ -25,11 +25,11 @@
     <div class="col-md-8">
       <div style="position: absolute; left: 50%; bottom: 10px" id="control-btns">
         <button ng-click="onTurn('left')">Left</button>
-        <button ng-click="onReset()">Reset</button>
+        <button ng-click="onTurn('reset')">Reset</button>
         <button ng-click="onTurn('right')">Right</button>
       </div>
 
-      <div id="canvas-container" perfetch-viewer model="{{ modelUrl }}" ng-if="!config.debug">
+      <div id="canvas-container" perfetch-viewer model="{{ modelUrl }}" camera-status="cameraStatus" ng-if="!config.debug">
       </div>
     </div>
 

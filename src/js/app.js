@@ -80,12 +80,12 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
       history: [0]
     },
   };
-
+$scope.cameraStatus = "";
 $scope.showTrend = function (tip){
   this.setChartData(tip);
 };
 $scope.setLineTipValue = function(data){
-      var that = this.linetips;
+      var that = $scope.linetips;
       var currentValues, lastValues;
       if(data != 0){
         currentValues = data[data.length-1];
@@ -194,16 +194,17 @@ $scope.setLineTipValue = function(data){
 
   $scope.onTurn = function (dir) {
     console.log('turn', dir);
-
-    // TODO turn events
-    if (dir === 'left') {
-    } else if (dir === 'right') {
-    }
+    if(dir!="reset"){
+      config.hideTip = true;
+    }debugger;
+    $scope.cameraStatus = dir;
+    console.log("$scope" + $scope.cameraStatus);
   };
 
   $scope.onReset = function () {
     console.log('reset');
     // TODO reset model
+    config.hideTip = false;
   };
 
 }]);

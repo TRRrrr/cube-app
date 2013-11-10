@@ -1,5 +1,6 @@
 module.value('config', {     // global state
   debug: false,
+  hideTip: true,
   companyName: 'Perfetch',
   menus: [
     {
