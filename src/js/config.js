@@ -1,5 +1,5 @@
 module.value('config', {     // global state
-  debug: false,
+  debug: true,
   companyName: 'Perfetch',
   menus: [
     {

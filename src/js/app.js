@@ -1,4 +1,6 @@
 module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function ($scope, $window, $http, config) {
+  var username = 'fuq';
+
   $scope.config = config;
 
   $scope.linetips = {
@@ -139,8 +141,22 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
   var currentArry = [40,40,30,40,40,40,40]; //fake data of: data[data.length-1]
   var lastArry = [10,50,50,60,50,50,50]; //fack data of: data[data.length-2]
   $scope.setLineTipValue(currentArry,lastArry)();
-  //
-  $scope.progress = 70;
+
+
+  $http({ method: 'GET', url: '/rest/user/' + username + '/progress' }).
+    success(function (data) {
+      if (data) {
+        $scope.progress = data.progress;
+      }
+    });
+
+  $http({ method: 'GET', url: '/rest/user/' + username + '/record' }).
+    success(function (data) {
+      if (data && data.length > 1) {
+
+      }
+    });
+
 
   $scope.chartData;
   $scope.setChartData = function(a){
