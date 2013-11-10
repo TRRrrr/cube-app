@@ -10,7 +10,11 @@ module.directive('perfetchViewer', function () {
     link: function (scope, el, attrs) {
 	    scope.$watch('model', function (newVal, oldVal) {
 	        // TODO reload model
-	        loader.load(newVal);
+	        if(typeof loader != 'undefined'){
+	        	if(loader.load !=null){
+	        	loader.load(newVal);
+	        	}
+	        }
 	        console.log('reload model', newVal);
 	    });
 	    scope.$watch('cameraStatus', function(newVal){
