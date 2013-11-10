@@ -9,8 +9,8 @@ module.directive('perfetchViewer', function () {
     transclude: false,
     link: function (scope, el, attrs) {
 	    scope.$watch('cameraStatus', function(newVal){
-	    	if(newVal != null){
-	    		moveCamera(newVal);
+	    	if(newVal != null){debugger;
+	    		cameraEventHandler(newVal);
 	    	}
 	    })
 
@@ -18,7 +18,7 @@ module.directive('perfetchViewer', function () {
 
 	      var container, stats, mesh,moveCameraFlag, myButton, clock, lastX, lastZ;
 
-	      var camera, cameraTarget, scene, renderer, control;
+	      var camera, cameraTarget, scene, renderer, control, cameraDir;
 	      init();
 	      animate();
 
@@ -189,11 +189,14 @@ module.directive('perfetchViewer', function () {
 		    function animate() {
 
 				requestAnimationFrame( animate );
-				if(scope.cameraDir == "right"){
-					cameraTurnRight();
-				}
-				if(scope.cameraDir == "left"){
-					cameraTurnLeft();
+				console.log(moveCameraFlag);
+				if(moveCameraFlag){
+			    	if(cameraDir == "right"){
+						cameraTurnRight();
+					}
+					if(cameraDir == "left"){
+						cameraTurnLeft();
+					}
 				}
 				render();
 				stats.update();
@@ -246,25 +249,31 @@ module.directive('perfetchViewer', function () {
 		    }
 
 		    function cameraReset(){
+		    	alert();
 		    	camera.position.x = Math.sin(0) * 3;
 		    	camera.position.z = Math.cos(0) * 3;
 		    	camera.lookAt( cameraTarget);
 		    	lastZ = 0;
 		    	lastX = 0;
-		    	moveCameraFlag = false;
 		    }
 
-		    function moveCamera(a){
-		    	if(a=="reset"){
-		    		moveCameraFlag = false;
-		    		scope.cameraDir = "";
-		    		cameraReset();
-		    	}else{
-		    		if(!moveCameraFlag){
-		    			clock = new THREE.Clock();
+		    function cameraEventHandler(dir){debugger;
+		    	if(dir == "reset"){
+		    		if(moveCameraFlag){
+		    			moveCameraFlag = false;
+		    		}else{
+		    			cameraReset();
 		    		}
-		    		scope.cameraDir = a;
-				}
+		    	}else{
+		    		setMoveCamera(dir);
+		    	}
+		    }
+
+
+		    function setMoveCamera(dir){debugger;
+		    		clock = new THREE.Clock();
+		    		cameraDir = dir;	
+					moveCameraFlag = true;
 		    }
 
 		      // Rotate an object around an arbitrary axis in object space
