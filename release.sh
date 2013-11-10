@@ -1,7 +1,10 @@
 grunt concat
 grunt less
 
-mkdir release
+if [ ! -d release ]; then
+	mkdir release
+fi
+
 cp src/*.html release/
 cp -r src/dist release/
 cp -r src/img release/
