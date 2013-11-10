@@ -6,3 +6,5 @@ src/dist
 *.stl
 
 *.swp
+
+release/
