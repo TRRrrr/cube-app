@@ -12,8 +12,7 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
       seg1Len: 50,
       seg2Len: 150,
       value: 50,
-      oldValue: 60,
-      history: [[8,7,6,5,6,4,5,64,6]]
+      oldValue: 60
     },
     wrist: {
       titleText: 'Wrist',
@@ -23,8 +22,7 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
       seg1Len: 50,
       seg2Len: 150,
       value: 50,
-      oldValue: 60,
-      history: [[80,32,432,42,2,3,1,2,3]]
+      oldValue: 60
     },
     neck: {
       titleText: 'Neck',
@@ -34,8 +32,7 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
       seg1Len: 50,
       seg2Len: 200,
       value: 70,
-      oldValue: 80,
-      history: [0]
+      oldValue: 80
     },
     arm: {
       titleText: 'Upper Arm',
@@ -45,8 +42,7 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
       seg1Len: 50,
       seg2Len: 200,
       value: 70,
-      oldValue: 80,
-      history: [0]
+      oldValue: 80
     },
     hip: {
       titleText: 'Hip',
@@ -56,8 +52,7 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
       seg1Len: 50,
       seg2Len: 200,
       value: 70,
-      oldValue: 80,
-      history: [0]
+      oldValue: 80
     },
     thigh: {
       titleText: 'Thigh',
@@ -67,8 +62,7 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
       seg1Len: 50,
       seg2Len: 200,
       value: 70,
-      oldValue: 80,
-      history: [0]
+      oldValue: 80
     },
     calf: {
       titleText: 'Calf',
@@ -78,14 +72,10 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
       seg1Len: 50,
       seg2Len: 200,
       value: 70,
-      oldValue: 80,
-      history: [0]
+      oldValue: 80
     },
   };
 
-  $scope.showTrend = function (id){
-    $scope.chartData = [$scope.historyData[id]];
-  };
 $scope.setLineTipValue = function(data){
       var that = this.linetips;
       var currentValues, lastValues;
@@ -130,32 +120,15 @@ $scope.setLineTipValue = function(data){
     modelAddrs: [[3,7,9,1,4,6,8,2,5]]
   };
 
-//fake data input.
-  var currentArry = [40,40,30,40,40,40,40]; //fake data of: data[data.length-1]
-  var lastArry = [10,50,50,60,50,50,50]; //fack data of: data[data.length-2]
-  $scope.setLineTipValue([currentArry,lastArry])();
-//
-/*  $http({ method: 'GET', url: '/rest/user/fuq/record'}).
-      success(function (data) {
-        console.log(data);
-        if(data.length == 1){$scope.setLineTipValue(0)()}
-        $scope.setLineTipValue(data)();
-      }).
-      error(function () {
-       console.log('error');
-      });
-  */
-  //fake data input.
-  var currentArry = [40,40,30,40,40,40,40]; //fake data of: data[data.length-1]
-  var lastArry = [10,50,50,60,50,50,50]; //fack data of: data[data.length-2]
-  $scope.setLineTipValue(currentArry,lastArry)();
-
 
   $http({ method: 'GET', url: '/rest/user/' + username + '/progress' }).
     success(function (data) {
       if (data) {
         $scope.progress = data.progress;
       }
+    }).
+    error(function () {
+      $scope.progress = 0;
     });
 
   var parts = ['calf', 'chest', 'hip', 'neck', 'thigh', 'upperarm', 'waist'];
@@ -173,6 +146,14 @@ $scope.setLineTipValue = function(data){
     return history;
   }
 
+  function recordsToTips(records) {
+    var tips = {};
+    $.each(parts, function () {
+
+    });
+  }
+
+
   $http({ method: 'GET', url: '/rest/user/' + username + '/record' }).
     success(function (data) {
       if (data && data.length > 1) {
@@ -181,8 +162,14 @@ $scope.setLineTipValue = function(data){
 
         $scope.chartData = [$scope.historyData.calf];
       }
+    }).
+    error(function () {
+      alert('no record');
     });
 
+  $scope.showTrend = function (id){
+    $scope.chartData = [$scope.historyData[id]];
+  };
 
   $scope.chartOptions = {
     animate: true,
