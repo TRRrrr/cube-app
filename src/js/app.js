@@ -107,7 +107,6 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
     }
   };
 
-  $scope.modelUrl = '3dmodel/zhengXian.stl';
 
   $scope.bodyMesureHistory = {
     wrist:[[3,7,9,1,4,6,8,2,5]],
@@ -158,11 +157,18 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
 
   $http({ method: 'GET', url: '/rest/user/' + username + '/record' }).
     success(function (data) {
-      if (data && data.length > 1) {
+      if (angular.isArray(data)) {
+        // convert data to history
         $scope.historyData = recordsToHistory(data);
         console.log('history', $scope.historyData);
 
         $scope.chartData = [$scope.historyData.calf];
+
+
+        // load 3dmodel
+        if (data.length > 0) {
+          $scope.modelUrl = '/3dmodel/' + data[0].modelAddrs;
+        }
       }
     }).
     error(function () {
@@ -211,7 +217,7 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
     console.log('turn', dir);
     if(dir!="reset"){
       config.hideTip = true;
-    }debugger;
+    }
     $scope.cameraStatus = dir;
     console.log("$scope" + $scope.cameraStatus);
   };

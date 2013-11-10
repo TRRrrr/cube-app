@@ -8,15 +8,6 @@ module.directive('perfetchViewer', function () {
     },
     transclude: false,
     link: function (scope, el, attrs) {
-	    scope.$watch('model', function (newVal, oldVal) {
-	        // TODO reload model
-	        if(typeof loader != 'undefined'){
-	        	if(loader.load !=null){
-	        	loader.load(newVal);
-	        	}
-	        }
-	        console.log('reload model', newVal);
-	    });
 	    scope.$watch('cameraStatus', function(newVal){
 	    	if(newVal != null){
 	    		moveCamera(newVal);
@@ -73,6 +64,15 @@ module.directive('perfetchViewer', function () {
 			// ASCII file
 
 			var loader = new THREE.STLLoader();
+	        scope.$watch('model', function (newVal, oldVal) {
+	          // TODO reload model
+	          if(typeof loader != 'undefined'){
+	            if(loader.load !=null){
+	              loader.load(newVal);
+	            }
+	          }
+	          console.log('reload model', newVal);
+	        });
 			loader.addEventListener( 'load', function ( event ) {
 
 			  var geometry = event.content;
@@ -87,18 +87,18 @@ module.directive('perfetchViewer', function () {
 
 			  }
 	/* //*********** for creating wireframeMesh. currently not in use;
-			  var wireframeMaterial = new THREE.MeshBasicMaterial({ 
-			  	color: 0x00ee00, 
-			  	wireframe: true, 
-			  	transparent: true, 
-			  	wireframeLinewidth: 0 
+			  var wireframeMaterial = new THREE.MeshBasicMaterial({
+			  	color: 0x00ee00,
+			  	wireframe: true,
+			  	transparent: true,
+			  	wireframeLinewidth: 0
 			  });
 	*/
-			  var material = new THREE.MeshBasicMaterial({ 
-			    	vertexColors: THREE.FaceColors, 
-			    	transparent: false, 
-			    	opacity: 0.7, 
-			    	wireframe: false,  
+			  var material = new THREE.MeshBasicMaterial({
+			    	vertexColors: THREE.FaceColors,
+			    	transparent: false,
+			    	opacity: 0.7,
+			    	wireframe: false,
 			    	shading: THREE.SmoothShading
 			    });
 			  //var material = new THREE.MeshPhongMaterial( { ambient: 0xAAAAAA, color: 0xFFDFC4, specular: 0x333333, shininess: 100 } );
@@ -206,7 +206,7 @@ module.directive('perfetchViewer', function () {
 				//control.update();
 				renderer.render( scene, camera );
 
-				//keyboard may not be useful. 
+				//keyboard may not be useful.
 				/*
 				var start = 0;
 				document.onkeydown=function(e){e = e || window.event;
