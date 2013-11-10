@@ -26,6 +26,7 @@ module.directive('uiChart', function () {
       };
 
       scope.$watch(attrs.data, function () {
+        debugger;
         renderChart();
       }, true);
 

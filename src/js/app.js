@@ -83,9 +83,9 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
     },
   };
 
-$scope.showTrend = function (tip){
-  this.setChartData(tip);
-};
+  $scope.showTrend = function (id){
+    $scope.chartData = [$scope.historyData[id]];
+  };
 $scope.setLineTipValue = function(data){
       var that = this.linetips;
       var currentValues, lastValues;
@@ -158,42 +158,47 @@ $scope.setLineTipValue = function(data){
       }
     });
 
+  var parts = ['calf', 'chest', 'hip', 'neck', 'thigh', 'upperarm', 'waist'];
+
+  function recordsToHistory(records) {
+    var history = {};
+
+    $.each(parts, function (i, part) {
+      history[part] = [];
+      $.each(records, function (j, record) {
+        history[part].unshift([new Date(record.scantime), record[part]]);
+      });
+    });
+
+    return history;
+  }
+
   $http({ method: 'GET', url: '/rest/user/' + username + '/record' }).
     success(function (data) {
       if (data && data.length > 1) {
+        $scope.historyData = recordsToHistory(data);
+        console.log('history', $scope.historyData);
 
+        $scope.chartData = [$scope.historyData.calf];
       }
     });
 
 
-  $scope.chartData;
-  $scope.setChartData = function(a){
-    if(typeof a ==="string"){
-      if(!this.linetips[a].history){
-        console.log("error: incorrect string input");
-      }else{
-        this.chartData = this.linetips[a].history;
-      }
-    }
-    if(typeof a ==="object"){
-      if(!a.history){
-        console.log("error: incorrect object input");
-      }else{
-        this.chartData = a.history;
-        alert(a.history);
-      }
-    }
-  };
-  $scope.setChartData("chest");
-
   $scope.chartOptions = {
+    animate: true,
     seriesDefaults: {
-      // Make this a pie chart.
-      // renderer: jQuery.jqplot.CanvasAxisLabelRenderer,
       rendererOptions: {
-        // Put data labels on the pie slices.
-        // By default, labels show the percentage of the slice.
+        animation: {
+          speed: 800
+        },
         showDataLabels: true
+      }
+    },
+    axes: {
+      xaxis: {
+        renderer: $.jqplot.DateAxisRenderer,
+        tickOptions: { formatString: '%b %#d, %y' },
+        tickInterval: '1 week'
       }
     },
     legend: { show: false },
