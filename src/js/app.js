@@ -1,4 +1,6 @@
 module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function ($scope, $window, $http, config) {
+  var username = 'fuq';
+
   $scope.config = config;
 
   $scope.linetips = {
@@ -80,10 +82,14 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
       history: [0]
     },
   };
+
 $scope.cameraStatus = "";
-$scope.showTrend = function (tip){
-  this.setChartData(tip);
-};
+
+
+  $scope.showTrend = function (id){
+    $scope.chartData = [$scope.historyData[id]];
+  };
+
 $scope.setLineTipValue = function(data){
       var that = $scope.linetips;
       var currentValues, lastValues;
@@ -103,7 +109,7 @@ $scope.setLineTipValue = function(data){
         that[a].value = currentValues[b];
         that[a].oldValue = lastValues[b];
       }
-      
+
       return function(){
         var body = ["wrist","neck","chest","arm","thigh","calf","hip"];
         for(var i = 0; i < body.length;i++){
@@ -142,37 +148,61 @@ $scope.setLineTipValue = function(data){
       error(function () {
        console.log('error');
       });
-*/
-  $scope.progress = 70;
+  */
+  //fake data input.
+  var currentArry = [40,40,30,40,40,40,40]; //fake data of: data[data.length-1]
+  var lastArry = [10,50,50,60,50,50,50]; //fack data of: data[data.length-2]
+  $scope.setLineTipValue(currentArry,lastArry)();
 
-  $scope.chartData;
-  $scope.setChartData = function(a){
-    if(typeof a ==="string"){
-      if(!this.linetips[a].history){
-        console.log("error: incorrect string input");
-      }else{
-        this.chartData = this.linetips[a].history;
+
+  $http({ method: 'GET', url: '/rest/user/' + username + '/progress' }).
+    success(function (data) {
+      if (data) {
+        $scope.progress = data.progress;
       }
-    }
-    if(typeof a ==="object"){
-      if(!a.history){
-        console.log("error: incorrect object input");
-      }else{ 
-        this.chartData = a.history;
-        alert(a.history);
+    });
+
+  var parts = ['calf', 'chest', 'hip', 'neck', 'thigh', 'upperarm', 'waist'];
+
+  function recordsToHistory(records) {
+    var history = {};
+
+    $.each(parts, function (i, part) {
+      history[part] = [];
+      $.each(records, function (j, record) {
+        history[part].unshift([new Date(record.scantime), record[part]]);
+      });
+    });
+
+    return history;
+  }
+
+  $http({ method: 'GET', url: '/rest/user/' + username + '/record' }).
+    success(function (data) {
+      if (data && data.length > 1) {
+        $scope.historyData = recordsToHistory(data);
+        console.log('history', $scope.historyData);
+
+        $scope.chartData = [$scope.historyData.calf];
       }
-    }
-  };
-  $scope.setChartData("chest");
+    });
+
 
   $scope.chartOptions = {
+    animate: true,
     seriesDefaults: {
-      // Make this a pie chart.
-      // renderer: jQuery.jqplot.CanvasAxisLabelRenderer,
       rendererOptions: {
-        // Put data labels on the pie slices.
-        // By default, labels show the percentage of the slice.
+        animation: {
+          speed: 800
+        },
         showDataLabels: true
+      }
+    },
+    axes: {
+      xaxis: {
+        renderer: $.jqplot.DateAxisRenderer,
+        tickOptions: { formatString: '%b %#d, %y' },
+        tickInterval: '1 week'
       }
     },
     legend: { show: false },
