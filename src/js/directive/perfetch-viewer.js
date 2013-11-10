@@ -3,41 +3,42 @@ module.directive('perfetchViewer', function () {
     restrict: 'EACM',
     replace: false,
     scope: {
-      model: '@'
+      model: '@',
+      cameraStatus: '='
     },
     transclude: false,
     link: function (scope, el, attrs) {
-      scope.$watch('model', function (newVal, oldVal) {
-        // TODO reload model
-        console.log('reload model', newVal);
-      });
+	    scope.$watch('model', function (newVal, oldVal) {
+	        // TODO reload model
+	        if(typeof loader != 'undefined'){
+	        	if(loader.load !=null){
+	        	loader.load(newVal);
+	        	}
+	        }
+	        console.log('reload model', newVal);
+	    });
+	    scope.$watch('cameraStatus', function(newVal){
+	    	if(newVal != null){
+	    		moveCamera(newVal);
+	    	}
+	    })
+
 	      if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-	      var container, stats, mesh, myButton, moveCameraFlag, clock, lastX, lastZ;
+	      var container, stats, mesh,moveCameraFlag, myButton, clock, lastX, lastZ;
 
 	      var camera, cameraTarget, scene, renderer, control;
 	      init();
 	      animate();
 
 	      function init() {
-	        debugger;
 	        lastX = 0;
-	        lastZ = Math.PI*2;
+	        lastZ = 0;
 			moveCameraFlag = false;
-		    container = el[0];console.log();
-			myButton = document.createElement( 'input');
-			myButton.value = "Click me";
-			myButton.type = "button";
-			myButton.style.position = "absolute";
-			myButton.style.left = "100px";
-			myButton.addEventListener("click", function(){setMoveCamera();});
-		    el.append(myButton);
+		    container = el[0];
 
 			camera = new THREE.PerspectiveCamera( 35, el.width() / el.height(), 1, 15 );
-			camera.position.set( Math.cos(lastX) * 3, 0.15, Math.sin(lastZ) * 3 );
-
-			//controls = new THREE.OrbitControls( camera );
-			//controls.addEventListener( 'change', render );
+			camera.position.set( Math.sin(lastX) * 3, 0.15, Math.cos(lastZ) * 3 );
 
 			cameraTarget = new THREE.Vector3( 0, 0.3, 0 );
 
@@ -102,9 +103,8 @@ module.directive('perfetchViewer', function () {
 			    });
 			  //var material = new THREE.MeshPhongMaterial( { ambient: 0xAAAAAA, color: 0xFFDFC4, specular: 0x333333, shininess: 100 } );
 			  mesh = new THREE.Mesh( geometry, material );
-
-			  mesh.position.set( 0, 0.40, -0.28 );
-			  mesh.rotation.set( 0, Math.PI/2, 0 );
+			  mesh.rotation.set( 0, 0, 0 );
+			  mesh.position.set( 0.39, 0.40, 0.16 );
 			  mesh.scale.set( 1, 1, 1 );
 
 			  mesh.castShadow = true;
@@ -129,8 +129,8 @@ module.directive('perfetchViewer', function () {
 			    scene.add( control.gizmo );*/
 
 			} );
-			loader.load( '3dmodel/zhengXian.stl' );
-			//loader.load(scope.model);
+			//loader.load( '3dmodel/zhengXian.stl' );
+			loader.load(scope.model);
 
 			// Lights
 
@@ -181,17 +181,19 @@ module.directive('perfetchViewer', function () {
 		    }
 
 		    function onWindowResize() {
-			// camera.aspect = window.innerWidth / window.innerHeight;
-			// camera.updateProjectionMatrix();
-
-			// renderer.setSize( el.width(), el.height() );
-		      }
+			 camera.aspect = el.width() / el.height();
+			 camera.updateProjectionMatrix();
+			 renderer.setSize( el.width(), el.height() );
+		    }
 
 		    function animate() {
 
 				requestAnimationFrame( animate );
-				if(moveCameraFlag){
-				  moveCamera();
+				if(scope.cameraDir == "right"){
+					cameraTurnRight();console.log("true");
+				}
+				if(scope.cameraDir == "left"){
+					cameraTurnLeft();
 				}
 				render();
 				stats.update();
@@ -225,23 +227,43 @@ module.directive('perfetchViewer', function () {
 				*/
 		    }
 
-		    function moveCamera(){
+		    function cameraTurnRight(){
 		    	var dt = clock.getDelta();
-		    	console.log(dt);
 		    	lastX = lastX + dt;
 		    	lastZ = lastZ + dt;
-				camera.position.x = Math.cos( lastX ) * 3;
-				camera.position.z = Math.sin( lastZ ) * 3;
+				camera.position.x = Math.sin( lastX ) * 3;
+				camera.position.z = Math.cos( lastZ ) * 3;
 				camera.lookAt( cameraTarget );
-				console.log(camera.position);
 		    }
 
-		    function setMoveCamera(){
-		      	if(!moveCameraFlag){
-		      		clock = new THREE.Clock();
-					moveCameraFlag = true;
-				}else{
-					moveCameraFlag = false;
+		    function cameraTurnLeft(){
+		    	var dt = clock.getDelta();
+		    	lastX = lastX + dt;
+		    	lastZ = lastZ + dt;
+				camera.position.x = Math.sin( -lastX ) * 3;
+				camera.position.z = Math.cos( -lastZ ) * 3;
+				camera.lookAt( cameraTarget );
+		    }
+
+		    function cameraReset(){
+		    	camera.position.x = Math.sin(0) * 3;
+		    	camera.position.z = Math.cos(0) * 3;
+		    	camera.lookAt( cameraTarget);
+		    	lastZ = 0;
+		    	lastX = 0;
+		    	moveCameraFlag = false;
+		    }
+
+		    function moveCamera(a){
+		    	if(a=="reset"){
+		    		moveCameraFlag = false;
+		    		scope.cameraDir = "";
+		    		cameraReset();
+		    	}else{
+		    		if(!moveCameraFlag){
+		    			clock = new THREE.Clock();
+		    		}
+		    		scope.cameraDir = a;
 				}
 		    }
 

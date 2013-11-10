@@ -76,34 +76,36 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
     },
   };
 
-$scope.setLineTipValue = function(data){
-      var that = this.linetips;
-      var currentValues, lastValues;
-      if(data != 0){
-        currentValues = data[data.length-1];
-        lastValues = data.length != 1 ? data[data.length-2] : 0;
-        console.log(currentValues + " " + lastValues + " ; " + data.length);
-      }else{
-        currentValues = [0];
-        lastValues = [0];
-      }
-      /*if( toType(currentValues)!="array" || toType(lastValues)!="array"){
-        console.log("data input error");
-        return false;
-      }*/  //Defined toType in config.js as a globle. why couldn`t call it here.
-      function applyValue(a,b){
-        that[a].value = currentValues[b];
-        that[a].oldValue = lastValues[b];
-      }
+  $scope.cameraStatus = "";
 
-      return function(){
-        var body = ["wrist","neck","chest","arm","thigh","calf","hip"];
-        for(var i = 0; i < body.length;i++){
-         applyValue(body[i],i);
-        }
-        for(var i = 0; i < 2; i++ ){console.log("hi");}//history part todo
+  $scope.setLineTipValue = function(data){
+    var that = $scope.linetips;
+    var currentValues, lastValues;
+    if(data != 0){
+      currentValues = data[data.length-1];
+      lastValues = data.length != 1 ? data[data.length-2] : 0;
+      console.log(currentValues + " " + lastValues + " ; " + data.length);
+    }else{
+      currentValues = [0];
+      lastValues = [0];
+    }
+    /*if( toType(currentValues)!="array" || toType(lastValues)!="array"){
+      console.log("data input error");
+      return false;
+      }*/  //Defined toType in config.js as a globle. why couldn`t call it here.
+    function applyValue(a,b){
+      that[a].value = currentValues[b];
+      that[a].oldValue = lastValues[b];
+    }
+
+    return function(){
+      var body = ["wrist","neck","chest","arm","thigh","calf","hip"];
+      for(var i = 0; i < body.length;i++){
+        applyValue(body[i],i);
       }
-    };
+      for(var i = 0; i < 2; i++ ){console.log("hi");}//history part todo
+    }
+  };
 
   $scope.modelUrl = '3dmodel/zhengXian.stl';
 
@@ -207,16 +209,17 @@ $scope.setLineTipValue = function(data){
 
   $scope.onTurn = function (dir) {
     console.log('turn', dir);
-
-    // TODO turn events
-    if (dir === 'left') {
-    } else if (dir === 'right') {
-    }
+    if(dir!="reset"){
+      config.hideTip = true;
+    }debugger;
+    $scope.cameraStatus = dir;
+    console.log("$scope" + $scope.cameraStatus);
   };
 
   $scope.onReset = function () {
     console.log('reset');
     // TODO reset model
+    config.hideTip = false;
   };
 
 }]);
