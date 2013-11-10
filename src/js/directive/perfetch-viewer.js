@@ -12,7 +12,7 @@ module.directive('perfetchViewer', function () {
 	        // TODO reload model
 	        if(typeof loader != 'undefined'){
 	        	if(loader.load !=null){
-	        	loader.load(newVal);
+		        	loader.load(newVal);
 	        	}
 	        }
 	        console.log('reload model', newVal);
@@ -190,7 +190,7 @@ module.directive('perfetchViewer', function () {
 
 				requestAnimationFrame( animate );
 				if(scope.cameraDir == "right"){
-					cameraTurnRight();console.log("true");
+					cameraTurnRight();
 				}
 				if(scope.cameraDir == "left"){
 					cameraTurnLeft();
@@ -227,7 +227,7 @@ module.directive('perfetchViewer', function () {
 				*/
 		    }
 
-		    function cameraTurnRight(){
+		    function cameraTurnLeft(){
 		    	var dt = clock.getDelta();
 		    	lastX = lastX + dt;
 		    	lastZ = lastZ + dt;
@@ -236,7 +236,7 @@ module.directive('perfetchViewer', function () {
 				camera.lookAt( cameraTarget );
 		    }
 
-		    function cameraTurnLeft(){
+		    function cameraTurnRight(){
 		    	var dt = clock.getDelta();
 		    	lastX = lastX + dt;
 		    	lastZ = lastZ + dt;
