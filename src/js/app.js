@@ -11,18 +11,18 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
       angle: 20,
       seg1Len: 50,
       seg2Len: 150,
-      value: 50,
-      oldValue: 60
+      value: "",
+      oldValue: ""
     },
-    wrist: {
-      titleText: 'Wrist',
+    waist: {
+      titleText: 'Waist',
       position: [350, 350],
       direction: 'top-left',
       angle: 20,
       seg1Len: 50,
       seg2Len: 150,
-      value: 50,
-      oldValue: 60
+      value: "",
+      oldValue: ""
     },
     neck: {
       titleText: 'Neck',
@@ -31,18 +31,18 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
       angle: 45,
       seg1Len: 50,
       seg2Len: 200,
-      value: 70,
-      oldValue: 80
+      value: "",
+      oldValue: ""
     },
-    arm: {
+    upperarm: {
       titleText: 'Upper Arm',
       position: [590, 250],
       direction: 'top-right',
       angle: 30,
       seg1Len: 50,
       seg2Len: 200,
-      value: 70,
-      oldValue: 80
+      value: "",
+      oldValue: ""
     },
     hip: {
       titleText: 'Hip',
@@ -51,8 +51,8 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
       angle: 30,
       seg1Len: 50,
       seg2Len: 200,
-      value: 70,
-      oldValue: 80
+      value: "",
+      oldValue: ""
     },
     thigh: {
       titleText: 'Thigh',
@@ -61,8 +61,8 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
       angle: 30,
       seg1Len: 50,
       seg2Len: 200,
-      value: 70,
-      oldValue: 80
+      value: "",
+      oldValue: ""
     },
     calf: {
       titleText: 'Calf',
@@ -71,55 +71,12 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
       angle: 30,
       seg1Len: 50,
       seg2Len: 200,
-      value: 70,
-      oldValue: 80
+      value: "",
+      oldValue: ""
     },
   };
 
   $scope.cameraStatus = "";
-
-  $scope.setLineTipValue = function(data){
-    var that = $scope.linetips;
-    var currentValues, lastValues;
-    if(data != 0){
-      currentValues = data[data.length-1];
-      lastValues = data.length != 1 ? data[data.length-2] : 0;
-      console.log(currentValues + " " + lastValues + " ; " + data.length);
-    }else{
-      currentValues = [0];
-      lastValues = [0];
-    }
-    /*if( toType(currentValues)!="array" || toType(lastValues)!="array"){
-      console.log("data input error");
-      return false;
-      }*/  //Defined toType in config.js as a globle. why couldn`t call it here.
-    function applyValue(a,b){
-      that[a].value = currentValues[b];
-      that[a].oldValue = lastValues[b];
-    }
-
-    return function(){
-      var body = ["wrist","neck","chest","arm","thigh","calf","hip"];
-      for(var i = 0; i < body.length;i++){
-        applyValue(body[i],i);
-      }
-      for(var i = 0; i < 2; i++ ){console.log("hi");}//history part todo
-    }
-  };
-
-
-  $scope.bodyMesureHistory = {
-    wrist:[[3,7,9,1,4,6,8,2,5]],
-    neck:[[3,7,9,1,4,6,8,2,5]],
-    chest:[[3,7,9,1,4,6,8,2,5]],
-    arm:[[3,7,9,1,4,6,8,2,5]],
-    thigh:[[3,7,9,1,4,6,8,2,5]],
-    calf:[[3,7,9,1,4,6,8,2,5]],
-    hip:[[5,7,9,1,4,6,8,2,5]],
-    scantime:[[3,7,9,1,4,6,8,2,5]],
-    snapShotAddrs:[[3,7,9,1,4,6,8,2,5]],
-    modelAddrs: [[3,7,9,1,4,6,8,2,5]]
-  };
 
 
   $http({ method: 'GET', url: '/rest/user/' + username + '/progress' }).
@@ -148,10 +105,21 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
   }
 
   function recordsToTips(records) {
-    var tips = {};
-    $.each(parts, function () {
+    var tips = $scope.linetips;
 
-    });
+    if (records[0]) {
+      $.each(parts, function (i, part) {
+        tips[part].value = records[0][part];
+      });
+    }
+
+    if (records[1]) {
+      $.each(parts, function (i, part) {
+        tips[part].oldValue = records[1][part];
+      });
+    }
+
+    return tips;
   }
 
 
@@ -169,6 +137,9 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
         if (data.length > 0) {
           $scope.modelUrl = '/3dmodel/' + data[0].modelAddrs;
         }
+
+        // convert data to tips
+        $scope.linetips = recordsToTips(data);
       }
     }).
     error(function () {
