@@ -184,12 +184,19 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
   var $controlBtns = $('#control-btns');
   $controlBtns.css('margin-left', $controlBtns.width() / -2);
 
-  $scope.onTurn = function (dir) {
+  $scope.onTurn = function (dir) {debugger;
     console.log('turn', dir);
-    if(dir!="reset"){
+    if(dir !="pause"){
       config.hideTip = true;
+      $scope.cameraStatus = dir;
+    }else{
+      config.hideTip = false;
+      if($scope.cameraStatus == "pause"){
+        $scope.cameraStatus = "reset";
+      }else{
+        $scope.cameraStatus = "pause"
+      }
     }
-    $scope.cameraStatus = dir;
     console.log("$scope" + $scope.cameraStatus);
   };
 

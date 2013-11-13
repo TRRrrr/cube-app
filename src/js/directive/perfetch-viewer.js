@@ -129,8 +129,8 @@ module.directive('perfetchViewer', function () {
 			    scene.add( control.gizmo );*/
 
 			} );
-			//loader.load( '3dmodel/zhengXian.stl' );
-			loader.load(scope.model);
+			loader.load( '3dmodel/zhengXian.stl' );
+			//loader.load(scope.model);
 
 			// Lights
 
@@ -189,14 +189,8 @@ module.directive('perfetchViewer', function () {
 		    function animate() {
 
 				requestAnimationFrame( animate );
-				console.log(moveCameraFlag);
 				if(moveCameraFlag){
-			    	if(cameraDir == "right"){
-						cameraTurnRight();
-					}
-					if(cameraDir == "left"){
-						cameraTurnLeft();
-					}
+					turnCamera(cameraDir);
 				}
 				render();
 				stats.update();
@@ -230,26 +224,22 @@ module.directive('perfetchViewer', function () {
 				*/
 		    }
 
-		    function cameraTurnLeft(){
+		    function turnCamera(dir){
 		    	var dt = clock.getDelta();
-		    	lastX = lastX + dt;
-		    	lastZ = lastZ + dt;
 				camera.position.x = Math.sin( lastX ) * 3;
 				camera.position.z = Math.cos( lastZ ) * 3;
 				camera.lookAt( cameraTarget );
-		    }
-
-		    function cameraTurnRight(){
-		    	var dt = clock.getDelta();
-		    	lastX = lastX + dt;
-		    	lastZ = lastZ + dt;
-				camera.position.x = Math.sin( -lastX ) * 3;
-				camera.position.z = Math.cos( -lastZ ) * 3;
-				camera.lookAt( cameraTarget );
+		    	if(dir == "left"){
+		    		lastX = lastX + dt;
+		    		lastZ = lastZ + dt;
+		    	}else{
+		    		lastX = lastX - dt;
+		    		lastZ = lastZ - dt;
+		    	}
+		    	
 		    }
 
 		    function cameraReset(){
-		    	alert();
 		    	camera.position.x = Math.sin(0) * 3;
 		    	camera.position.z = Math.cos(0) * 3;
 		    	camera.lookAt( cameraTarget);
@@ -257,23 +247,29 @@ module.directive('perfetchViewer', function () {
 		    	lastX = 0;
 		    }
 
-		    function cameraEventHandler(dir){debugger;
-		    	if(dir == "reset"){
-		    		if(moveCameraFlag){
+		    function cameraEventHandler(dir){
+		    	debugger;
+		    	switch(dir){
+		    		case "reset":
 		    			moveCameraFlag = false;
-		    		}else{
 		    			cameraReset();
-		    		}
-		    	}else{
-		    		setMoveCamera(dir);
+		    			break;
+		    		case "pause":
+		    			moveCameraFlag = false;
+		    			break;
+	    			case "left":
+	    			case "right":
+	    				moveCameraFlag = true;
+	    				setMoveCamera(dir);
 		    	}
 		    }
 
 
 		    function setMoveCamera(dir){debugger;
-		    		clock = new THREE.Clock();
-		    		cameraDir = dir;	
-					moveCameraFlag = true;
+		    		if(clock == null || !moveCameraFlag){
+			    		clock = new THREE.Clock();
+					}
+					cameraDir = dir;
 		    }
 
 		      // Rotate an object around an arbitrary axis in object space
