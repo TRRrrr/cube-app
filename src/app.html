@@ -1,7 +1,7 @@
 <div ng-controller="AppCtrl">
 
   <linetip ng-repeat="(id, tip) in linetips" seg1-len="tip.seg1Len" seg1-angle="tip.angle" seg2-len="tip.seg2Len"
-           direction="tip.direction" pos="tip.position">
+           direction="tip.direction" pos="tip.position" ng-hide = "hideLinetip">
     <div class="body-change right" ng-if="tip.direction == 'top-right'">
       <div class="value-change" ng-click="showTrend(id)">
         <span class="new-value">{{tip.value}}</span>

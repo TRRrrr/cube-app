@@ -259,16 +259,17 @@ module.directive('perfetchViewer', function () {
 		    			break;
 	    			case "left":
 	    			case "right":
+			    		if(clock == null || !moveCameraFlag){
+			    			clock = new THREE.Clock();
+						}
 	    				moveCameraFlag = true;
 	    				setMoveCamera(dir);
+	    				break;
 		    	}
 		    }
 
 
 		    function setMoveCamera(dir){debugger;
-		    		if(clock == null || !moveCameraFlag){
-			    		clock = new THREE.Clock();
-					}
 					cameraDir = dir;
 		    }
 

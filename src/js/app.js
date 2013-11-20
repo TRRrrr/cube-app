@@ -77,7 +77,7 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
   };
 
   $scope.cameraStatus = "";
-
+  $scope.hideLinetip = true;
 
   $http({ method: 'GET', url: '/rest/user/' + username + '/progress' }).
     success(function (data) {
@@ -186,11 +186,11 @@ module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function (
 
   $scope.onTurn = function (dir) {debugger;
     console.log('turn', dir);
-    if(dir !="pause"){
-      config.hideTip = true;
+    if(dir !="reset"){
+      $scope.hideLinetip = false;
       $scope.cameraStatus = dir;
     }else{
-      config.hideTip = false;
+      $scope.hideLinetip = true;
       if($scope.cameraStatus == "pause"){
         $scope.cameraStatus = "reset";
       }else{
