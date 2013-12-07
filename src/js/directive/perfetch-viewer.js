@@ -9,7 +9,7 @@ module.directive('perfetchViewer', function () {
     transclude: false,
     link: function (scope, el, attrs) {
 	    scope.$watch('cameraStatus', function(newVal){
-	    	if(newVal != null){debugger;
+	    	if(newVal != null){
 	    		cameraEventHandler(newVal);
 	    	}
 	    })
@@ -63,7 +63,7 @@ module.directive('perfetchViewer', function () {
 
 			// ASCII file
 
-			var loader = new THREE.STLLoader();
+			var loader = new THREE.PLYLoader();
 	        scope.$watch('model', function (newVal, oldVal) {
 	          // TODO reload model
 	          if(typeof loader != 'undefined'){
@@ -74,62 +74,20 @@ module.directive('perfetchViewer', function () {
 	          console.log('reload model', newVal);
 	        });
 			loader.addEventListener( 'load', function ( event ) {
+					var geometry = event.content;
+					//var material = new THREE.MeshPhongMaterial( { ambient: 0x0055ff, color: 0x0055ff, specular: 0x111111, shininess: 200 } );
+					var mesh = new THREE.Mesh( geometry);
+					mesh.position.set( 0, 0.40, 0 );
+					mesh.rotation.set( 0, - Math.PI / 2, 0 );
+					mesh.scale.set( 1, 1, 1 );
 
-			  var geometry = event.content;
-			  //var geometry1 = event.content;
-			  for ( var i = 0; i < geometry.faces.length; i ++ ) {
-		   	    var face = geometry.faces[ i ];
-		   	    face.color.setHex( /*0x3366FF*/ 0x3366FF );
-		   	    //face color vs face vertiexColor;
-			    //face.vertexColors[0]= new THREE.Color(0x3366FF);
-			    //face.vertexColors[1] = new THREE.Color(0x3366FF);
-			    //face.vertexColors[2] = new THREE.Color(0x3366FF);
+					mesh.castShadow = true;
+					mesh.receiveShadow = true;
 
-			  }
-	/* //*********** for creating wireframeMesh. currently not in use;
-			  var wireframeMaterial = new THREE.MeshBasicMaterial({
-			  	color: 0x00ee00,
-			  	wireframe: true,
-			  	transparent: true,
-			  	wireframeLinewidth: 0
-			  });
-	*/
-			  var material = new THREE.MeshBasicMaterial({
-			    	vertexColors: THREE.FaceColors,
-			    	transparent: false,
-			    	opacity: 0.7,
-			    	wireframe: false,
-			    	shading: THREE.SmoothShading
-			    });
-			  //var material = new THREE.MeshPhongMaterial( { ambient: 0xAAAAAA, color: 0xFFDFC4, specular: 0x333333, shininess: 100 } );
-			  mesh = new THREE.Mesh( geometry, material );
-			  mesh.rotation.set( 0, 0, 0 );
-			  mesh.position.set( 0.39, 0.40, 0.16 );
-			  mesh.scale.set( 1, 1, 1 );
+					scene.add( mesh );
 
-			  mesh.castShadow = true;
-			  mesh.receiveShadow = true;
-			  mesh.geometry.verticesNeedUpdate = true;
-			  scene.add( mesh );
-			  /*
-			    var mesh1 = new THREE.Mesh(geometry1, wireframeMaterial);
-			    mesh1.position.set( 0, 0, 1.15 );
-			    mesh1.rotation.set( 0, 0, 0 );
-			    mesh1.scale.set( 1, 1, 1 );
-
-			    scene.add( mesh1);
-			  */
-			  /*
-			    control = new THREE.TransformControls( camera, renderer.domElement );
-			    control.addEventListener( 'change', render );
-
-			    control.attach( mesh );
-			    control.scale = 0.65;
-			    //control.hide();
-			    scene.add( control.gizmo );*/
-
-			} );
-			loader.load( '3dmodel/zhengXian.stl' );
+				} );debugger;
+			loader.load( '3dmodel/ball.ply' );
 			//loader.load(scope.model);
 
 			// Lights
@@ -248,7 +206,6 @@ module.directive('perfetchViewer', function () {
 		    }
 
 		    function cameraEventHandler(dir){
-		    	debugger;
 		    	switch(dir){
 		    		case "reset":
 		    			moveCameraFlag = false;
@@ -269,7 +226,7 @@ module.directive('perfetchViewer', function () {
 		    }
 
 
-		    function setMoveCamera(dir){debugger;
+		    function setMoveCamera(dir){
 					cameraDir = dir;
 		    }
 

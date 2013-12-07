@@ -10,3 +10,7 @@ src/dist
 release/
 
 src/js/directive/npm-debug.log
+
+*.ply
+
+*.zip
