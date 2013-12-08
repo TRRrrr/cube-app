@@ -1,6 +1,7 @@
 module.controller('AppCtrl', ['$scope', '$window', '$http', 'config', function ($scope, $window, $http, config) {
   var username = 'fuq';
-
+  
+  
   $scope.config = config;
 
   $scope.linetips = {
